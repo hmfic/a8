@@ -1,6 +1,8 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { JmodalComponent } from "../jmodal/jmodal.component";
+import { Globals } from '../globals'
+
 // import { SyssettingsmodalComponent } from "../syssettingsmodal/syssettingsmodal.component";
 
 @Component({
@@ -12,7 +14,8 @@ export class MenubarComponent implements OnInit {
 
   modalTitle:string;
 
-  constructor(private dialog: MatDialog) { };
+  constructor(private dialog: MatDialog,
+        private globals: Globals) { };
 
   openDialog():void {
         const dialogConfig = new MatDialogConfig();

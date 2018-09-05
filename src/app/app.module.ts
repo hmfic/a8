@@ -9,12 +9,14 @@ import { JmodalComponent } from './jmodal/jmodal.component';
 import { PostsComponent } from './posts/posts.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { UsersComponent } from './users/users.component';
+
 // new stuff
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCardModule, MatSidenavModule, MatCheckboxModule, MatToolbarModule, MatListModule, MatMenuModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule} from '@angular/cdk/overlay';
+import { Globals } from './globals';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { OverlayModule} from '@angular/cdk/overlay';
     ReactiveFormsModule, 
     OverlayModule
   ],
-  providers: [],
+  providers: [
+    Globals],
   bootstrap: [AppComponent],
   entryComponents: [ JmodalComponent ]
 })

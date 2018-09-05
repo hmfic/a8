@@ -1,13 +1,7 @@
 <mat-toolbar color="primary">
     <span>A6</span>
     <span class="fill-remaining-space"></span>
-
-
-    <button mat-raised-button color="primary" (click)="onSetTheme('default-theme')">Default</button>
-	<button mat-raised-button color="primary" (click)="onSetTheme('dark-theme')">Dark</button>
-	<button mat-raised-button color="primary" (click)="onSetTheme('light-theme')">Light</button>
-
-
+    <div class="mat-small">[ {{globals.theme}} ]</div>
     <button mat-button>
     	<i class="material-icons">help</i> Help
 	</button>
