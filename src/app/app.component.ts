@@ -20,9 +20,9 @@ import { Globals } from './globals'
   
 
   ngOnInit(): void {
-    console.log("adding theme for first time...",this.globals.theme);
+    //console.log("adding theme for first time...",this.globals.theme);
     const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
-    console.log("first time classes=",overlayContainerClasses);
+    //console.log("first time classes=",overlayContainerClasses);
     overlayContainerClasses.remove("dark-theme");
     overlayContainerClasses.remove("light-theme");
     overlayContainerClasses.remove("default-theme");
@@ -32,24 +32,24 @@ import { Globals } from './globals'
   }
 
    ngDoCheck() {
-    console.log("in docheck; global theme=",this.globals.theme);
+    //console.log("in docheck; global theme=",this.globals.theme);
     const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
     const themeClassesToRemove = Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'));
     if (this.globals.theme ==  themeClassesToRemove[0]) {
-      console.log("no change!");
+      //console.log("no change!");
     } else {
-      console.log("to remove=",themeClassesToRemove);
+      //console.log("to remove=",themeClassesToRemove);
       for (var i=0; i<themeClassesToRemove.length; i++) {
-        console.log("looping; themeClassesToRemove[i]=",themeClassesToRemove[i]);
+        //console.log("looping; themeClassesToRemove[i]=",themeClassesToRemove[i]);
          overlayContainerClasses.remove(themeClassesToRemove[i]);
       }
-      console.log("after removal=", Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'))) ;
+      //console.log("after removal=", Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'))) ;
     }
     // adding back now
-    console.log("adding back now")
+    //console.log("adding back now")
     overlayContainerClasses.add(this.globals.theme);
     this.componentCssClass = this.globals.theme;
-    console.log("after add=",this.overlayContainer.getContainerElement().classList);
+    //console.log("after add=",this.overlayContainer.getContainerElement().classList);
     // overlayContainerClasses.add(newThemeClass);
   } 
 

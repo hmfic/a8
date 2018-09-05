@@ -19,11 +19,11 @@ export class MenubarComponent implements OnInit {
 
   openDialog():void {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.disableClose = true;
+//        dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
               id: 1,
-              title: 'My Settings'
+              title: 'My settings'
           };
         // dialogConfig.direction = "rtl";
         this.dialog.open(JmodalComponent, dialogConfig);
@@ -31,11 +31,11 @@ export class MenubarComponent implements OnInit {
 
   openSysDialog():void {
         const dialogConfig = new MatDialogConfig();
-        dialogConfig.disableClose = true;
+//        dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
               id: 1,
-              title: 'System Settings'
+              title: 'System settings'
           };
         // dialogConfig.direction = "rtl";
         this.dialog.open(JmodalComponent, dialogConfig);

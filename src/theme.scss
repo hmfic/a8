@@ -3,7 +3,7 @@
 
 // SCSS  Typography
 $custom-typography: mat-typography-config(
-  $font-family: Roboto,
+  $font-family: Lato,
   $headline: mat-typography-level(24px, 48px, 400),
   $body-1: mat-typography-level(16px, 24px, 400)
 );
@@ -27,6 +27,7 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   @include angular-material-theme($dark-theme);
 }
 
+
 // Light theme
 $light-primary: mat-palette($mat-grey, 200, 500, 300);
 $light-accent: mat-palette($mat-brown, 200);
@@ -36,4 +37,26 @@ $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
 
 .light-theme {
   @include angular-material-theme($light-theme)
+}
+
+// bigmotion theme
+.bigmotion-theme {
+  $bigmotion-primary: mat-palette($mat-light-blue);
+  $bigmotion-accent:  mat-palette($mat-yellow, 400);
+
+  $bigmotion-theme: mat-light-theme($bigmotion-primary, $bigmotion-accent);
+
+  @include angular-material-theme($bigmotion-theme);
+}
+
+
+
+.candy-theme {
+	$candy-primary: mat-palette($mat-blue);
+	$candy-accent:  mat-palette($mat-pink, A200, A100, A400);
+	$candy-warn:    mat-palette($mat-red);
+
+	$candy-theme:   mat-light-theme($candy-primary, $candy-accent, $candy-warn);
+
+	@include angular-material-theme($candy-theme);
 }
