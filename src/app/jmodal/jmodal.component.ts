@@ -38,11 +38,11 @@ export class JmodalComponent  {
       });
       
     }
-    submit(form) {
+    /* submit(form) {
       console.log("submit!=",form.value.name,":",form.value.email);
-      this.name=form.value.name;
+      // this.globals.name=form.value.name;
       this.dialogRef.close(`${form.value.name})`);
-    }
+    } */
 
     onSetTheme(theme) {
       this.globals.theme=theme;

@@ -17,6 +17,7 @@ import { MatButtonModule, MatCardModule, MatSidenavModule, MatCheckboxModule, Ma
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule} from '@angular/cdk/overlay';
 import { Globals } from './globals';
+import { CookieService } from 'ngx-cookie-service';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,9 @@ import { Globals } from './globals';
     OverlayModule
   ],
   providers: [
-    Globals],
+    Globals, 
+    CookieService
+    ],
   bootstrap: [AppComponent],
   entryComponents: [ JmodalComponent ]
 })

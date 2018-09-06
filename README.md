@@ -1,27 +1,89 @@
 # A8
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.5.
+Angular 6 (et al) installation notes
 
-## Development server
+one time stuff …
+get the extension for sublime…
+    git clone --depth 1 https://github.com/Microsoft/TypeScript-Sublime-Plugin.git TypeScript
+brew install node
+node -v and npm -v should work
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+sudo npm install -g @angular/cli
+sudo chown -R $USER:$(id -gn $USER) /Users/bubba/.config
 
-## Code scaffolding
+create a new project…
+cd to your directory
+ng new test-app (add -- routing to create a routing file)
+ng serve
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
 
-## Build
+create service …
+cd test-app/src/app
+create a directory called services
+ng g service services/data
+add import {DataService} from “./services/data.service’ to app.module.ts…doesn’t do it automatically
+add DataService to provider in app.module.ts … doesn’t do it automatically
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+add service to each component that needs it … 
+   e.g. add “import {DataService} from ‘../../services/data.service’ to user.component.ts
+then inject dependency into the constructor in the user.component.ts file … 
+   e.g. ’constructor(private dataService:DataService) { ‘
+add your service code after the constructor and don’t forget to return the value
 
-## Running unit tests
+create component …
+create directory called components
+ng g component components/user (these create the correct entry in the app.module.ts for you)
+ng g component components/about
+NOTE: don’t like the components subdirectory, consider running directly from src/app
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+to add the component to the main html, edit app.component.html to add component selector
+(selector is found in user.component.ts file):
+<app-user></app-user>
 
-## Running end-to-end tests
+to add a new module (http, etc)
+go to the app.module.ts and add a new import
+  e.g. import { HttpModule } from “@angular/http’
+then add to the imports in the app.module.ts file
+  e.g. imports: […,..,HttpModule]
+go to each service that needs the module and import
+  e.g. import {Http} from ‘@angular/http’
+and for each service, inject the service as a dependency in the constructor
+  e.g. constructor(public http:Http) { …
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+===
+important directory/files
+src/app/app.module.ts - MAIN: imports, components and services/providers plus bootstrap
+src/app/app.component.ts - 
+src/app/app.component.html - main html
+src/app/components/<component>.component.html - component html
 
-## Further help
+example:
+ng new a6 --routing or 
+ng new a8 --style=scss --routing
+cd a6
+ng g component sidebar
+ng g component users
+ng g component details
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+ng g service data
+
+GIT
+git init
+git add .
+git commit -m “ “
+git remote add origin https://github.com/hmfic/a6.git
+git push -u origin master
+
+Update:
+npm outdated
+npm install tslint@latest --save (etc)
+npm install typescript@'>=2.7.2 <2.10'
+
+( Please run the following command to install a compatible version of TypeScript.
+    npm install typescript@'>=2.7.2 <2.10' )
+
+MATERIAL
+npm install --save @angular/material @angular/cdk @angular/animations
+ng add @angular/material
+
+npm install ngx-cookie-service --save
