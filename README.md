@@ -2,7 +2,7 @@
 
 Angular 6 (et al) installation notes
 
-**one time stuff …
+##one time stuff …
 get the extension for sublime…
     ```git clone --depth 1 https://github.com/Microsoft/TypeScript-Sublime-Plugin.git TypeScript```
 ```brew install node```
@@ -18,29 +18,29 @@ cd to your directory
 
 
 create service …
-cd test-app/src/app
+```cd test-app/src/app```
 create a directory called services
 ```ng g service services/data```
-add import {DataService} from “./services/data.service’ to app.module.ts…doesn’t do it automatically
+add ```import {DataService} from “./services/data.service’``` to app.module.ts…doesn’t do it automatically
 add DataService to provider in app.module.ts … doesn’t do it automatically
 
 add service to each component that needs it … 
-   e.g. add “import {DataService} from ‘../../services/data.service’ to user.component.ts
+   e.g. add ```“import {DataService} from ‘../../services/data.service’``` to user.component.ts
 then inject dependency into the constructor in the user.component.ts file … 
    e.g. ’constructor(private dataService:DataService) { ‘
 add your service code after the constructor and don’t forget to return the value
 
-create component …
+##create component …
 create directory called components
 ```ng g component components/user``` (these create the correct entry in the app.module.ts for you)
 ```ng g component components/about```
-NOTE: don’t like the components subdirectory, consider running directly from src/app
+NOTE: if you don’t like the components subdirectory, consider running directly from src/app
 
 to add the component to the main html, edit app.component.html to add component selector
 (selector is found in user.component.ts file):
 ```<app-user></app-user>```
 
-to add a new module (http, etc)
+##to add a new module (http, etc)
 go to the app.module.ts and add a new import
   e.g. ```import { HttpModule } from “@angular/http’```
 then add to the imports in the app.module.ts file
@@ -50,8 +50,8 @@ go to each service that needs the module and import
 and for each service, inject the service as a dependency in the constructor
   e.g. constructor(public http:Http) { …
 
-===
-important directory/files
+
+##important directory/files
 src/app/app.module.ts - MAIN: imports, components and services/providers plus bootstrap
 src/app/app.component.ts - 
 src/app/app.component.html - main html
@@ -66,14 +66,14 @@ example:
 
 ```ng g service data```
 
-**GIT
+##GIT
 ```git init```
 ```git add .```
 ```git commit -m “ “```
 ```git remote add origin https://github.com/hmfic/a6.git```
 ```git push -u origin master```
 
-**Update:
+##Update:
 ```npm outdated```
 ```npm install tslint@latest --save``` (etc)
 ```npm install typescript@'>=2.7.2 <2.10'```
@@ -81,7 +81,7 @@ example:
 ( Please run the following command to install a compatible version of TypeScript.
     npm install typescript@'>=2.7.2 <2.10' )
 
-**MATERIAL
+##MATERIAL
 ```npm install --save @angular/material @angular/cdk @angular/animations```
 ```ng add @angular/material```
 
