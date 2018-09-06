@@ -2,25 +2,25 @@
 
 Angular 6 (et al) installation notes
 
-one time stuff …
+**one time stuff …
 get the extension for sublime…
-    git clone --depth 1 https://github.com/Microsoft/TypeScript-Sublime-Plugin.git TypeScript
-brew install node
+    ```git clone --depth 1 https://github.com/Microsoft/TypeScript-Sublime-Plugin.git TypeScript```
+```brew install node```
 node -v and npm -v should work
 
-sudo npm install -g @angular/cli
-sudo chown -R $USER:$(id -gn $USER) /Users/bubba/.config
+```sudo npm install -g @angular/cli```
+```sudo chown -R $USER:$(id -gn $USER) /Users/bubba/.config```
 
 create a new project…
 cd to your directory
-ng new test-app (add -- routing to create a routing file)
-ng serve
+```ng new test-app (add -- routing to create a routing file)```
+```ng serve```
 
 
 create service …
 cd test-app/src/app
 create a directory called services
-ng g service services/data
+```ng g service services/data```
 add import {DataService} from “./services/data.service’ to app.module.ts…doesn’t do it automatically
 add DataService to provider in app.module.ts … doesn’t do it automatically
 
@@ -32,17 +32,17 @@ add your service code after the constructor and don’t forget to return the val
 
 create component …
 create directory called components
-ng g component components/user (these create the correct entry in the app.module.ts for you)
-ng g component components/about
+```ng g component components/user``` (these create the correct entry in the app.module.ts for you)
+```ng g component components/about```
 NOTE: don’t like the components subdirectory, consider running directly from src/app
 
 to add the component to the main html, edit app.component.html to add component selector
 (selector is found in user.component.ts file):
-<app-user></app-user>
+```<app-user></app-user>```
 
 to add a new module (http, etc)
 go to the app.module.ts and add a new import
-  e.g. import { HttpModule } from “@angular/http’
+  e.g. ```import { HttpModule } from “@angular/http’```
 then add to the imports in the app.module.ts file
   e.g. imports: […,..,HttpModule]
 go to each service that needs the module and import
@@ -58,32 +58,31 @@ src/app/app.component.html - main html
 src/app/components/<component>.component.html - component html
 
 example:
-ng new a6 --routing or 
-ng new a8 --style=scss --routing
-cd a6
-ng g component sidebar
-ng g component users
-ng g component details
+```ng new a6 --routing``` or 
+```ng new a8 --style=scss --routing```
+```cd a6```
+```ng g component users```
+```ng g component details```
 
-ng g service data
+```ng g service data```
 
-GIT
-git init
-git add .
-git commit -m “ “
-git remote add origin https://github.com/hmfic/a6.git
-git push -u origin master
+**GIT
+```git init```
+```git add .```
+```git commit -m “ “```
+```git remote add origin https://github.com/hmfic/a6.git```
+```git push -u origin master```
 
-Update:
-npm outdated
-npm install tslint@latest --save (etc)
-npm install typescript@'>=2.7.2 <2.10'
+**Update:
+```npm outdated```
+```npm install tslint@latest --save``` (etc)
+```npm install typescript@'>=2.7.2 <2.10'```
 
 ( Please run the following command to install a compatible version of TypeScript.
     npm install typescript@'>=2.7.2 <2.10' )
 
-MATERIAL
-npm install --save @angular/material @angular/cdk @angular/animations
-ng add @angular/material
+**MATERIAL
+```npm install --save @angular/material @angular/cdk @angular/animations```
+```ng add @angular/material```
 
-npm install ngx-cookie-service --save
+```npm install ngx-cookie-service --save```
