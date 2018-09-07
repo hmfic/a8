@@ -14,6 +14,7 @@ export class TodosComponent implements OnInit {
   	private globals: Globals) { }
 
   todos:Object;
+  user:Object;
 
   ngOnInit() {
   	this.data.getTodos(this.user).subscribe(data => this.todos = data);

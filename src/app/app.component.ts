@@ -18,12 +18,13 @@ import { DataService } from './data.service';
     private differs: KeyValueDiffers,
     private globals: Globals,
     private data: DataService)
-      { },
+      { }
     
   @HostBinding('class') componentCssClass;
   cookieValue:string = 'UNKNOWN';
   oldTheme:string = "UNDEFINED";
   oldName:string;
+
 
   ngOnInit(): void {
     // look for theme cookie
@@ -47,8 +48,8 @@ import { DataService } from './data.service';
     this.globals.name="Unknown";
     this.oldTheme = this.globals.theme;
 // check for name in cookies
-    const cookieExists: boolean = this.cookieService.check('name');
-    if (cookieExists) {
+    const cookieExists2: boolean = this.cookieService.check('name');
+    if (cookieExists2) {
       this.globals.name=this.cookieService.get('name');
     } 
     this.oldName = this.globals.name;
