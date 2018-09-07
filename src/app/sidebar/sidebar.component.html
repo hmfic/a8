@@ -1,20 +1,26 @@
-
 <mat-sidenav-container autosize (backdropClick)="drawer.toggle()" hasBackdrop>
 
   <mat-sidenav #drawer class="sidenav-contents" mode="side" [(opened)]="opened">
 
 	<mat-list>
 		 <mat-list-item> 
-		 	<a routerLink="" class="sidenav-links">
-				<button mat-button>
+		 	<a routerLink=""  class="sidenav-links"  >
+				<button mat-button [class.mat-raised-button]="this.router.url == '/'" [class.mat-flat-button]="this.router.url != '/'">
 					<i class="material-icons">supervised_user_circle</i> Users
 				</button>
 			</a> 
 		 </mat-list-item>
 		 <mat-list-item> 
 		 	<a routerLink="posts" class="sidenav-links" >
-		 		<button mat-button>
+		 		<button mat-button [class.mat-raised-button]="this.router.url == '/posts'">
 					<i class="material-icons">message</i> Posts
+				</button>
+			</a>
+	 	 </mat-list-item>
+	 	 <mat-list-item> 
+		 	<a routerLink="todos" class="sidenav-links" >
+		 		<button mat-button [class.mat-raised-button]="this.router.url == '/todos'">
+					<i class="material-icons">list</i> To-Dos
 				</button>
 			</a>
 	 	 </mat-list-item>
@@ -29,3 +35,7 @@
       	<router-outlet></router-outlet>
   </mat-sidenav-container>
 </mat-sidenav-container> 
+
+<!--
+	<a routerLink="posts" class="sidenav-links" >
+	-->

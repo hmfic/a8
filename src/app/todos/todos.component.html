@@ -1,0 +1,17 @@
+<h1>To-dos</h1>
+
+<div>
+	<div *ngFor="let todo of todos">
+		
+		<mat-card>
+			<mat-card-title>{{todo.title}}</mat-card-title>
+			<mat-card-content>
+				<div class="row">Completed: {{todo.completed}}</div>
+				<div class="row">UserID: {{todo.userId}}</div>
+				<div class="row">Name: {{getUser(todo.userId).name}}</div>
+				<div class="row">Company: {{getUser(todo.userId).company.name}}</div>
+			</mat-card-content>
+		</mat-card>
+		<p>
+	</div>
+</div>

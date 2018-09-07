@@ -2,6 +2,7 @@ import { Component, HostBinding, Input, KeyValueDiffers, DoCheck } from '@angula
 import { OverlayContainer} from '@angular/cdk/overlay';
 import { Globals } from './globals';
 import { CookieService } from 'ngx-cookie-service';
+import { DataService } from './data.service';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,9 @@ import { CookieService } from 'ngx-cookie-service';
     private cookieService: CookieService,
     public overlayContainer: OverlayContainer,
     private differs: KeyValueDiffers,
-    private globals: Globals){ },
+    private globals: Globals,
+    private data: DataService)
+      { },
     
   @HostBinding('class') componentCssClass;
   cookieValue:string = 'UNKNOWN';
@@ -49,6 +52,8 @@ import { CookieService } from 'ngx-cookie-service';
       this.globals.name=this.cookieService.get('name');
     } 
     this.oldName = this.globals.name;
+    // load up users into global array
+    this.data.getUsers().subscribe(data => this.globals.users = data);
   }
 
    ngDoCheck() {

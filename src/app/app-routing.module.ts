@@ -4,6 +4,7 @@ import { UsersComponent } from './users/users.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { DetailsComponent } from './details/details.component';
 import { PostsComponent } from './posts/posts.component';
+import { TodosComponent } from './todos/todos.component';
 
 const routes: Routes = [
 	{
@@ -17,6 +18,10 @@ const routes: Routes = [
 	{
 		path:'posts',
 		component: PostsComponent
+	},
+	{
+		path:'todos',
+		component: TodosComponent
 	}
 ];
 

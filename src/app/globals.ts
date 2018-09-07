@@ -5,4 +5,5 @@ export class Globals {
   theme: string = 'default-theme';
   title: string = 'Unknown';
   name: string = 'Unknown';
+  users:[];
 }

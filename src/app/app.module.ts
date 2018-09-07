@@ -18,6 +18,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule} from '@angular/cdk/overlay';
 import { Globals } from './globals';
 import { CookieService } from 'ngx-cookie-service';
+import { TodosComponent } from './todos/todos.component';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { CookieService } from 'ngx-cookie-service';
     JmodalComponent,
     PostsComponent,
     SidebarComponent,
-    UsersComponent
+    UsersComponent,
+    TodosComponent
   ],
   imports: [
     BrowserModule,
