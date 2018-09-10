@@ -13,12 +13,14 @@ import { UsersComponent } from './users/users.component';
 // new stuff
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCardModule, MatSidenavModule, MatCheckboxModule, MatToolbarModule, MatListModule, MatMenuModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatSidenavModule, MatGridListModule, MatCheckboxModule, MatToolbarModule, MatListModule, MatMenuModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule} from '@angular/cdk/overlay';
 import { Globals } from './globals';
 import { CookieService } from 'ngx-cookie-service';
 import { TodosComponent } from './todos/todos.component';
+import { SidebarService } from './sidebar/sidebar.service';
+import { AgmCoreModule } from '@agm/core';
 
 
 @NgModule({
@@ -40,6 +42,7 @@ import { TodosComponent } from './todos/todos.component';
     MatButtonModule, 
     MatCheckboxModule,
     MatCardModule,
+    MatGridListModule,
     MatSidenavModule,
     MatToolbarModule,
     MatListModule,
@@ -50,11 +53,15 @@ import { TodosComponent } from './todos/todos.component';
     MatSelectModule, 
     MatInputModule,
     ReactiveFormsModule, 
-    OverlayModule
+    OverlayModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBmmelmeHOr3KQovKCisOQfstNRR-TuVEs'
+    })
   ],
   providers: [
     Globals, 
-    CookieService
+    CookieService,
+    SidebarService
     ],
   bootstrap: [AppComponent],
   entryComponents: [ JmodalComponent ]

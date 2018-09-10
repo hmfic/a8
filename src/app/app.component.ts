@@ -25,9 +25,9 @@ import { DataService } from './data.service';
   oldTheme:string = "UNDEFINED";
   oldName:string;
 
-
   ngOnInit(): void {
     // look for theme cookie
+    console.log("in app component nginit");
     const cookieExists: boolean = this.cookieService.check('theme');
     var currTheme="dark-theme";
     if (cookieExists) {
@@ -42,10 +42,10 @@ import { DataService } from './data.service';
     overlayContainerClasses.add(currTheme);
     this.componentCssClass = currTheme;
     this.globals.theme=currTheme;
-    //console.log("nginit; theme set to ",currTheme);
-    // set globals
-    this.globals.title="a8";
+    this.globals.title="Application8";
     this.globals.name="Unknown";
+    this.globals.users=[];
+    this.globals.comments=[];
     this.oldTheme = this.globals.theme;
 // check for name in cookies
     const cookieExists2: boolean = this.cookieService.check('name');
@@ -54,12 +54,19 @@ import { DataService } from './data.service';
     } 
     this.oldName = this.globals.name;
     // load up users into global array
-    this.data.getUsers().subscribe(data => this.globals.users = data);
+    this.data.getUsers().subscribe(data => {this.globals.users = data},error => {console.log("getusers error");});
+    this.data.getComments().subscribe(data => {this.globals.comments = data},error => {console.log("getcomments error");});
+    // console.log("loaded global users;=",this.globals.users);
   }
 
    ngDoCheck() {
-       //console.log("this.oldTheme=",this.oldTheme);
-       //console.log("this.globals.theme=",this.globals.theme);
+    /*  if (typeof this.globals.users[0] === "undefined") {
+       console.log("global.user undefined; len=",this.globals.users.length);
+       console.log("global users undefined");
+     } else {
+       console.log("global users defined; globals.users lat=",this.globals.users[0]);
+       console.log("global.user defined; len=",this.globals.users.length);
+     } */
      if (this.oldTheme != this.globals.theme) {
         console.log("in ngdocheck; global new theme=",this.globals.theme);
         const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;
@@ -74,14 +81,15 @@ import { DataService } from './data.service';
           }
           //console.log("after removal=", Array.from(overlayContainerClasses).filter((item: string) => item.includes('-theme'))) ;
         }
-        // adding back now
-        //console.log("adding back now")
+        // adding classes back now
         overlayContainerClasses.add(this.globals.theme);
         this.componentCssClass = this.globals.theme;
         // update theme cookie if needed
         if (this.cookieService.get('theme') != this.globals.theme) 
           this.cookieService.set( 'theme', this.globals.theme );
      }
+
+     // check for name change
     if (this.globals.name != this.oldName) {
       console.log("in ngdocheck; name changed' old:new=",this.oldName,":",this.globals.name);
       this.oldName = this.globals.name;
@@ -97,5 +105,5 @@ import { DataService } from './data.service';
         }
       }
 
-  } 
+  }   // end ngdocheck
 }  // end appcomponent

@@ -15,6 +15,7 @@ export class TodosComponent implements OnInit {
 
   todos:Object;
   user:Object;
+  showCompleted:Boolean=true;
 
   ngOnInit() {
   	this.data.getTodos(this.user).subscribe(data => this.todos = data);
@@ -31,4 +32,5 @@ export class TodosComponent implements OnInit {
   	console.log("going to get user info in todos=",userID);
   	// return this.http.get('https://jsonplaceholder.typicode.com/users/' + userID)
   }
+
 }

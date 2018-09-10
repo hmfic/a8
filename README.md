@@ -86,3 +86,9 @@ example:
 ```ng add @angular/material```
 
 ```npm install ngx-cookie-service --save```
+
+### maps
+```npm install @agm/core --save```
+
+then add to app.modules:
+```import { AgmCoreModule } from '@agm/core';```

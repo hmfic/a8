@@ -1,11 +1,60 @@
 
-<div>	
-	<mat-card>
-		<mat-card-title>{{user.name}}</mat-card-title>
-		<mat-card-content>
-			<div class="row">User name: {{user.username}}</div>
-			<div class="row">Email: {{user.email}}</div>
-			<div class="row">Phone: {{user.phone}}</div>
-		</mat-card-content>
-	</mat-card>
-</div>
+<mat-grid-list cols="10" rowHeight="1:5">
+	<mat-grid-tile colspan='3'>	
+		<mat-card>
+			<mat-card-title>{{user$.name}}</mat-card-title>
+			<mat-card-content>
+				<div class="row">User name: {{user$.username}}</div>
+				<div class="row">Email: {{user$.email}}</div>
+				<div class="row">Phone: {{user$.phone}}</div>
+				<div class="row">Website: {{user$.website}}</div>
+				<div class="row">Company: {{user$.company?.name}}</div>
+				<!-- the above messy question marks eliminates the warning about company.name not being a valid object 
+					{{user.company?.name}} says ignore is the company.ame does not exist -->
+				<div class="row">Street: {{user$.address?.street}}</div>
+				<div class="row">Suite: {{user$.address?.suite}}</div>
+				<div class="row">City: {{user$.address?.city}}, {{user$.address?.zipcode}}</div> 
+			</mat-card-content>
+		</mat-card>
+	</mat-grid-tile>
+	<mat-grid-tile colspan='7'>
+		<mat-card>
+			<mat-card-title>{{user$.name}} location  ({{distance(loc$?.lat,loc$?.lon,user$.address?.geo.lat,user$.address?.geo.lng,"K")}} kilometers from you)</mat-card-title>
+			<mat-card-content>
+				<agm-map #gm [latitude]="+user$.address?.geo.lat" [longitude]="+user$.address?.geo.lng" [zoom]="2">
+				  <agm-marker (mouseOver)="onMouseOver(infoWindow1,gm)" [latitude]="+user$.address?.geo.lat" [longitude]="+user$.address?.geo.lng">
+				  	
+				  	<agm-info-window #infoWindow1>
+					      <b class="infow">{{user$.name}}</b>
+					      <div class="infow">{{user$.company?.name}}</div>
+					      <div class="infow">[{{user$.address?.geo.lat}}, {{user$.address?.geo.lng}}]</div>          
+					</agm-info-window>
+
+				  </agm-marker>
+				  <agm-marker (mouseOver)="onMouseOver(infoWindow2,gm)" [latitude]="+loc$?.lat" [longitude]="+loc$?.lon">
+				  	<agm-info-window #infoWindow2>
+					      <b class="infow">Your location</b>
+					      <div class="infow">{{loc$?.city}}, {{loc$?.region}}  {{loc$?.countryCode}}</div>
+					      <div class="infow">{{loc$?.isp}}</div>
+					      <div class="infow">[{{loc$?.lat}}, {{loc$?.lon}}]</div>
+					</agm-info-window>
+
+				  </agm-marker>
+
+				  <agm-polyline [strokeColor]="'gray'" [strokeWeight]=2 [geodesic]=true>
+				    <agm-polyline-point  
+				        [latitude]="+user$.address?.geo.lat"
+				        [longitude]="+user$.address?.geo.lng">
+				    </agm-polyline-point>
+				    <agm-polyline-point  
+				        [latitude]="+loc$?.lat"
+				        [longitude]="+loc$?.lon">
+				    </agm-polyline-point>
+				</agm-polyline>
+
+
+				</agm-map>
+			</mat-card-content>
+		</mat-card>
+	</mat-grid-tile>
+</mat-grid-list>

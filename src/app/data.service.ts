@@ -23,4 +23,13 @@ export class DataService {
   getTodos(userID) {
   	return this.http.get('https://jsonplaceholder.typicode.com/todos')
   }
+
+  getComments() {
+    return this.http.get('https://jsonplaceholder.typicode.com/comments')
+  }
+
+  getLoc() {
+    return this.http.get('http://ip-api.com/json')
+  }
+  
 }

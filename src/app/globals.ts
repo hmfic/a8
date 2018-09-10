@@ -6,4 +6,5 @@ export class Globals {
   title: string = 'Unknown';
   name: string = 'Unknown';
   users:any;
+  comments:any;
 }

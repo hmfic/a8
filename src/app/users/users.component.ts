@@ -18,6 +18,7 @@ export class UsersComponent implements OnInit {
   	private data: DataService,
   	private globals: Globals) { }
 
+
   ngOnInit() {
   	this.data.getUsers().subscribe(data => this.users = data);
   	this.data.getUsers().subscribe(data => this.globals.users = data);

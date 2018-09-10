@@ -1,15 +1,27 @@
-<h1>To-dos</h1>
 
+<mat-grid-list cols="2" rowHeight="8:1">
+		<mat-grid-tile style="text-align: left;">
+			<div class="bogus">
+				<h1>To-Dos</h1>
+			</div>
+		</mat-grid-tile>
+		<mat-grid-tile align="right">
+			<mat-checkbox [(ngModel)]="showCompleted" class="mobogus">Show completed</mat-checkbox>
+		</mat-grid-tile>
+</mat-grid-list>
 <div>
 	<div *ngFor="let todo of todos">
-		
-		<mat-card>
-			<mat-card-title>{{todo.title}}</mat-card-title>
+		<mat-card *ngIf="showCompleted || !todo.completed">
+			<mat-card-title>
+				<span *ngIf="todo.completed"><i class="material-icons green">check_circle</i> {{todo.title}} </span>
+				<span *ngIf="!todo.completed"><i class="material-icons orange">cancel</i> {{todo.title}} </span>
+			</mat-card-title>
 			<mat-card-content>
-				<div class="row">Completed: {{todo.completed}}</div>
-				<div class="row">UserID: {{todo.userId}}</div>
+				<div class="row" *ngIf="todo.completed">Status:  Completed!</div>
+				<div class="row" *ngIf="!todo.completed">Status:  Pending</div>
 				<div class="row">Name: {{getUser(todo.userId).name}}</div>
 				<div class="row">Company: {{getUser(todo.userId).company.name}}</div>
+				<div class="row">City: {{getUser(todo.userId).address.city}}</div>
 			</mat-card-content>
 		</mat-card>
 		<p>

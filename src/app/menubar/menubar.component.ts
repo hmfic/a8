@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { JmodalComponent } from "../jmodal/jmodal.component";
-import { Globals } from '../globals'
-
-// import { SyssettingsmodalComponent } from "../syssettingsmodal/syssettingsmodal.component";
+import { SidebarComponent} from "../sidebar/sidebar.component";
+import { Globals } from '../globals';
+import { SidebarService } from '../sidebar/sidebar.service';
 
 @Component({
   selector: 'app-menubar',
@@ -14,8 +14,19 @@ export class MenubarComponent implements OnInit {
 
   modalTitle:string;
 
-  constructor(private dialog: MatDialog,
-        private globals: Globals) { };
+  constructor(
+        private dialog: MatDialog,
+        private globals: Globals,
+        private sidebar: SidebarService) { };
+
+  toggleActive:boolean = false;
+
+  public toggleSidebar() {
+    this.toggleActive = !this.toggleActive;
+    this.sidebar.toggle();
+
+    // console.log('Clicked');
+  }
 
   openDialog():void {
         const dialogConfig = new MatDialogConfig();

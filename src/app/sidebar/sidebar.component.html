@@ -1,41 +1,32 @@
-<mat-sidenav-container autosize (backdropClick)="drawer.toggle()" hasBackdrop>
+<mat-sidenav-container autosize hasBackdrop>
 
-  <mat-sidenav #drawer class="sidenav-contents" mode="side" [(opened)]="opened">
+  <mat-sidenav #sidebar class="sidenav-contents" mode="over">
 
-	<mat-list>
+	<mat-list dense>
 		 <mat-list-item> 
 		 	<a routerLink=""  class="sidenav-links"  >
-				<button mat-button [class.mat-raised-button]="this.router.url == '/'" [class.mat-flat-button]="this.router.url != '/'">
+				<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/'" [class.mat-flat-button]="this.router.url != '/'" >
 					<i class="material-icons">supervised_user_circle</i> Users
 				</button>
 			</a> 
 		 </mat-list-item>
 		 <mat-list-item> 
 		 	<a routerLink="posts" class="sidenav-links" >
-		 		<button mat-button [class.mat-raised-button]="this.router.url == '/posts'">
+		 		<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/posts'" [class.mat-flat-button]="this.router.url != '/posts'" >
 					<i class="material-icons">message</i> Posts
 				</button>
 			</a>
 	 	 </mat-list-item>
 	 	 <mat-list-item> 
 		 	<a routerLink="todos" class="sidenav-links" >
-		 		<button mat-button [class.mat-raised-button]="this.router.url == '/todos'">
+		 		<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/todos'" [class.mat-flat-button]="this.router.url != '/todos'">
 					<i class="material-icons">list</i> To-Dos
 				</button>
 			</a>
 	 	 </mat-list-item>
 	</mat-list>
   </mat-sidenav>
-  <button type="button" mat-flat-button (click)="drawer.toggle()" color="accent">
-	    	<i *ngIf="!opened" class="material-icons">chevron_right</i>
-	    	<i *ngIf="opened" class="material-icons">chevron_left</i>
-	    		NAVIGATION
-  </button>
   <mat-sidenav-container class="drawer-contents">
       	<router-outlet></router-outlet>
   </mat-sidenav-container>
 </mat-sidenav-container> 
-
-<!--
-	<a routerLink="posts" class="sidenav-links" >
-	-->
