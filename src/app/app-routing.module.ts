@@ -5,10 +5,15 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { DetailsComponent } from './details/details.component';
 import { PostsComponent } from './posts/posts.component';
 import { TodosComponent } from './todos/todos.component';
+import { UsergraphsComponent } from './usergraphs/usergraphs.component';
 
 const routes: Routes = [
 	{
 		path:'',
+		component: UsersComponent
+	},
+	{
+		path:'users',
 		component: UsersComponent
 	},
 	{
@@ -22,6 +27,10 @@ const routes: Routes = [
 	{
 		path:'todos',
 		component: TodosComponent
+	},
+	{
+		path:'usergraphs',
+		component: UsergraphsComponent
 	}
 ];
 

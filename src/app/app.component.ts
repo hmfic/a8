@@ -3,6 +3,7 @@ import { OverlayContainer} from '@angular/cdk/overlay';
 import { Globals } from './globals';
 import { CookieService } from 'ngx-cookie-service';
 import { DataService } from './data.service';
+import { Routes, Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -17,13 +18,16 @@ import { DataService } from './data.service';
     public overlayContainer: OverlayContainer,
     private differs: KeyValueDiffers,
     private globals: Globals,
-    private data: DataService)
+    private data: DataService,
+    public router: Router)
       { }
     
   @HostBinding('class') componentCssClass;
   cookieValue:string = 'UNKNOWN';
   oldTheme:string = "UNDEFINED";
   oldName:string;
+
+  
 
   ngOnInit(): void {
     // look for theme cookie
@@ -57,6 +61,13 @@ import { DataService } from './data.service';
     this.data.getUsers().subscribe(data => {this.globals.users = data},error => {console.log("getusers error");});
     this.data.getComments().subscribe(data => {this.globals.comments = data},error => {console.log("getcomments error");});
     // console.log("loaded global users;=",this.globals.users);
+
+    // get all the routes
+    //for (var i = 0; i < this.router.config.length; i++) {
+    //    var routePath:string = this.router.config[i].path;
+    //    console.log(routePath);
+    //}
+    
   }
 
    ngDoCheck() {

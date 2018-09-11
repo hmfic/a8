@@ -1,32 +1,70 @@
 <mat-sidenav-container autosize hasBackdrop>
 
   <mat-sidenav #sidebar class="sidenav-contents" mode="over">
-
-	<mat-list dense>
-		 <mat-list-item> 
-		 	<a routerLink=""  class="sidenav-links"  >
-				<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/'" [class.mat-flat-button]="this.router.url != '/'" >
+  	<mat-list>
+		 <mat-list-item  routerLinkActive="active-link"> 
+		 	<a routerLink="users" class="sidenav-links" routerLinkActive="active-link">
+				<div (click)="sidebar.close()" >
 					<i class="material-icons">supervised_user_circle</i> Users
-				</button>
+				</div>
 			</a> 
 		 </mat-list-item>
-		 <mat-list-item> 
-		 	<a routerLink="posts" class="sidenav-links" >
-		 		<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/posts'" [class.mat-flat-button]="this.router.url != '/posts'" >
+		 <mat-list-item routerLinkActive="active-link"> 
+		 	<a routerLink="posts" class="sidenav-links" routerLinkActive="active-link">
+		 		<div (click)="sidebar.close()" >
 					<i class="material-icons">message</i> Posts
-				</button>
+				</div>
 			</a>
 	 	 </mat-list-item>
-	 	 <mat-list-item> 
-		 	<a routerLink="todos" class="sidenav-links" >
-		 		<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/todos'" [class.mat-flat-button]="this.router.url != '/todos'">
+	 	 <mat-list-item  routerLinkActive="active-link"> 
+		 	<a routerLink="todos" class="sidenav-links" routerLinkActive="active-link">
+		 		<div (click)="sidebar.close()" >
 					<i class="material-icons">list</i> To-Dos
-				</button>
+				</div>
+			</a>
+	 	 </mat-list-item>
+	 	 <mat-list-item  routerLinkActive="active-link"> 
+		 	<a routerLink="usergraphs" class="sidenav-links" routerLinkActive="active-link">
+		 		<div (click)="sidebar.close()" >
+					<i class="material-icons">bar_chart</i> User graphs
+				</div>
 			</a>
 	 	 </mat-list-item>
 	</mat-list>
+  	
   </mat-sidenav>
   <mat-sidenav-container class="drawer-contents">
       	<router-outlet></router-outlet>
   </mat-sidenav-container>
 </mat-sidenav-container> 
+
+	
+	<!--
+	<div>
+  		<a routerLink="" class="sidenav-links">
+			<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/'" [class.mat-flat-button]="this.router.url != '/'" style="width:100%;">
+				<i class="material-icons">supervised_user_circle</i> Users
+			</button>
+		</a>
+	</div>
+	<div>
+		<a routerLink="posts" class="sidenav-links" >
+	 		<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/posts'" [class.mat-flat-button]="this.router.url != '/posts'" style="width:100%;">
+				<i class="material-icons">message</i> Posts
+			</button>
+		</a>
+	</div>
+	<div>
+		<a routerLink="todos" class="sidenav-links" >
+	 		<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/todos'" [class.mat-flat-button]="this.router.url != '/todos'" style="width:100%;">
+				<i class="material-icons">list</i> To-Dos
+			</button>
+		</a>
+	</div>
+	<div>
+		<a routerLink="usergraphs" class="sidenav-links" >
+	 		<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/usergraphs'" [class.mat-flat-button]="this.router.url != '/usergraphs'" style="width:100%;">
+				<i class="material-icons">bar_chart</i> User graphs
+			</button>
+		</a>
+	</div>-->

@@ -4,7 +4,7 @@
 }
 
 .sidenav-contents {
-	padding:1rem;
+	padding:0rem;
 }
 
 .topleft {
@@ -17,6 +17,8 @@
 	text-decoration: none;
 	color:darkgray;
 	vertical-align: middle;
+	text-align:left;
+	width:100% 
 }
 
 a.sidenav-links:hover {
@@ -29,6 +31,10 @@ a.sidenav-links:hover {
 	outline: 0;
 }
 
-.mat-list-item-content .mat-list-item{
-	padding: 0 4px;
+.mat-nav-list {
+	background: gray;
+}
+
+.active-link {
+	background: gray;
 }

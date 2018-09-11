@@ -24,6 +24,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { TodosComponent } from './todos/todos.component';
 import { SidebarService } from './sidebar/sidebar.service';
 import { AgmCoreModule } from '@agm/core';
+import { UsergraphsComponent } from './usergraphs/usergraphs.component';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { AgmCoreModule } from '@agm/core';
     PostsComponent,
     SidebarComponent,
     UsersComponent,
-    TodosComponent
+    TodosComponent,
+    UsergraphsComponent
   ],
   imports: [
     BrowserModule,

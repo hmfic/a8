@@ -28,6 +28,7 @@ export class PostsComponent implements OnInit {
   			return this.globals.users[i];
   		}
   	}
+    console.log("Error; did not find a name; userID=",userID);
   }
 
   /* getComments(postId) {
