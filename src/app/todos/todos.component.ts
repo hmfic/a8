@@ -16,7 +16,8 @@ export class TodosComponent implements OnInit {
   todos:Object;
   user:Object;
   showCompleted:Boolean=true;
-  persons:[];
+  todoMode:String="all";
+  persons:any;
   selectedID:number;
 
   ngOnInit() {

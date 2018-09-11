@@ -13,7 +13,10 @@ import { UsersComponent } from './users/users.component';
 // new stuff
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCardModule, MatSidenavModule, MatGridListModule, MatCheckboxModule, MatToolbarModule, MatListModule, MatMenuModule, MatDialogModule, MatFormFieldModule, MatSelectModule, MatInputModule } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatSidenavModule, MatGridListModule, MatCheckboxModule, 
+         MatToolbarModule, MatListModule, MatMenuModule, MatDialogModule, MatFormFieldModule, 
+         MatSelectModule, MatInputModule } from '@angular/material';
+import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule} from '@angular/cdk/overlay';
 import { Globals } from './globals';
@@ -52,7 +55,8 @@ import { AgmCoreModule } from '@agm/core';
     MatFormFieldModule,
     MatSelectModule, 
     MatInputModule,
-    ReactiveFormsModule, 
+    ReactiveFormsModule,
+    MatRadioModule,
     OverlayModule,
     AgmCoreModule.forRoot({
       apiKey: 'AIzaSyBmmelmeHOr3KQovKCisOQfstNRR-TuVEs'
