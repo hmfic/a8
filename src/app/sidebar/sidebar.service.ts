@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MatSidenav } from '@angular/material';
 import { MenubarComponent } from '../menubar/menubar.component';
 
+
 @Injectable()
 export class SidebarService {
 	private sidebar: MatSidenav;

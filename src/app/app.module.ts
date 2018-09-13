@@ -26,6 +26,9 @@ import { SidebarService } from './sidebar/sidebar.service';
 import { AgmCoreModule } from '@agm/core';
 import { UsergraphsComponent } from './usergraphs/usergraphs.component';
 
+import { select, selectAll } from "d3-selection";
+import { HelpmodalComponent } from './helpmodal/helpmodal.component';
+
 
 @NgModule({
   declarations: [
@@ -37,7 +40,8 @@ import { UsergraphsComponent } from './usergraphs/usergraphs.component';
     SidebarComponent,
     UsersComponent,
     TodosComponent,
-    UsergraphsComponent
+    UsergraphsComponent,
+    HelpmodalComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +74,6 @@ import { UsergraphsComponent } from './usergraphs/usergraphs.component';
     SidebarService
     ],
   bootstrap: [AppComponent],
-  entryComponents: [ JmodalComponent ]
+  entryComponents: [ JmodalComponent, HelpmodalComponent ]
 })
 export class AppModule { }

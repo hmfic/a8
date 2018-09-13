@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { JmodalComponent } from "../jmodal/jmodal.component";
+import { HelpmodalComponent } from "../helpmodal/helpmodal.component";
 import { SidebarComponent} from "../sidebar/sidebar.component";
 import { Globals } from '../globals';
 import { SidebarService } from '../sidebar/sidebar.service';
@@ -51,7 +52,18 @@ export class MenubarComponent implements OnInit {
         // dialogConfig.direction = "rtl";
         this.dialog.open(JmodalComponent, dialogConfig);
     }
-
+   openHelpDialog():void {
+        //console.log("in openhelpmodal");
+        const dialogConfig = new MatDialogConfig();
+//        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.data = {
+              id: 1,
+              title: 'My settings'
+          };
+        // dialogConfig.direction = "rtl";
+        this.dialog.open(HelpmodalComponent, dialogConfig);
+    } 
 
   ngOnInit() { }
  }

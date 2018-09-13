@@ -1,8 +1,9 @@
-
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { ActivatedRoute } from '@angular/router';
 import { AgmCoreModule } from '@agm/core';
+
+import { Globals } from "../globals";
 
 @Component({
   selector: 'app-details',
@@ -17,13 +18,16 @@ export class DetailsComponent implements OnInit {
 
   constructor( 
     private route: ActivatedRoute, 
-    private data: DataService) { 
+    private data: DataService,
+    private globals: Globals) { 
   	this.route.params.subscribe( params => this.user$ = params.id);
   	}
 
   ngOnInit() {
-  	this.data.getUser(this.user$).subscribe (data => this.user$ = data);
-    this.data.getLoc().subscribe (data => {this.loc$ = data});
+    // console.log("this.user$=",this.user$);
+    //this.user$ = this.globals.users;
+  	//this.data.getUser(this.user$).subscribe (data => this.user$ = data);
+    //this.data.getLoc().subscribe (data => {this.loc$ = data});
   }
 
   onMouseOver(infoWindow, gm) {

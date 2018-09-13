@@ -12,14 +12,14 @@
 	left:0;
 }
 
-.sidenav-links {
-	font-size: 1rem;
-	text-decoration: none;
-	color:darkgray;
-	vertical-align: middle;
-	text-align:left;
-	width:100% 
-}
+// .sidenav-links {
+//	font-size: 1rem;
+//	text-decoration: none;
+//	color:darkgray;
+//	vertical-align: middle;
+//	text-align:left;
+//	width:100% 
+//} 
 
 a.sidenav-links:hover {
 	color:darkgray;
@@ -32,9 +32,22 @@ a.sidenav-links:hover {
 }
 
 .mat-nav-list {
-	background: gray;
+	background: darkgray;
 }
 
-.active-link {
-	background: gray;
+.sidenav-links-dark {
+	font-size: 1rem;
+	text-decoration: none;
+	background:darkgray;
+	vertical-align: middle;
+	text-align:left;
+	width:100% 
+}
+.sidenav-links-light {
+	font-size: 1rem;
+	text-decoration: none;
+	background:#222;
+	vertical-align: middle;
+	text-align:left;
+	width:100% 
 }

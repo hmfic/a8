@@ -2,31 +2,31 @@
 
   <mat-sidenav #sidebar class="sidenav-contents" mode="over">
   	<mat-list>
-		 <mat-list-item  routerLinkActive="active-link"> 
-		 	<a routerLink="users" class="sidenav-links" routerLinkActive="active-link">
-				<div (click)="sidebar.close()" >
-					<i class="material-icons">supervised_user_circle</i> Users
+		 <mat-list-item routerLinkActive="{{getBackground(globals.theme)}}"> 
+		 	<a routerLink="users" class="sidenav-links" routerLinkActive="{{getBackground(globals.theme)}}" >
+				<div (click)="sidebar.close()" style="display: flex;align-items: center;">
+					<i class="material-icons">people</i>&nbsp; Users
 				</div>
 			</a> 
 		 </mat-list-item>
-		 <mat-list-item routerLinkActive="active-link"> 
-		 	<a routerLink="posts" class="sidenav-links" routerLinkActive="active-link">
-		 		<div (click)="sidebar.close()" >
-					<i class="material-icons">message</i> Posts
+		 <mat-list-item routerLinkActive="{{getBackground(globals.theme)}}"> 
+		 	<a routerLink="posts" class="sidenav-links" routerLinkActive="{{getBackground(globals.theme)}}">
+		 		<div (click)="sidebar.close()" style="display: flex;align-items: center;">
+					<i class="material-icons">message</i>&nbsp; Posts
 				</div>
 			</a>
 	 	 </mat-list-item>
-	 	 <mat-list-item  routerLinkActive="active-link"> 
-		 	<a routerLink="todos" class="sidenav-links" routerLinkActive="active-link">
-		 		<div (click)="sidebar.close()" >
-					<i class="material-icons">list</i> To-Dos
+	 	 <mat-list-item  routerLinkActive="{{getBackground(globals.theme)}}"> 
+		 	<a routerLink="todos" class="sidenav-links" routerLinkActive="{{getBackground(globals.theme)}}">
+		 		<div (click)="sidebar.close()" style="display: flex;align-items: center;">
+					<i class="material-icons">list</i>&nbsp; To-Do's
 				</div>
 			</a>
 	 	 </mat-list-item>
-	 	 <mat-list-item  routerLinkActive="active-link"> 
-		 	<a routerLink="usergraphs" class="sidenav-links" routerLinkActive="active-link">
-		 		<div (click)="sidebar.close()" >
-					<i class="material-icons">bar_chart</i> User graphs
+	 	 <mat-list-item  routerLinkActive="{{getBackground(globals.theme)}}"> 
+		 	<a routerLink="usergraphs" class="sidenav-links" routerLinkActive="{{getBackground(globals.theme)}}">
+		 		<div (click)="sidebar.close()" style="display: flex;align-items: center;">
+					<i class="material-icons">bar_chart</i>&nbsp; User graphs
 				</div>
 			</a>
 	 	 </mat-list-item>

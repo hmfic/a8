@@ -16,14 +16,14 @@ export class TodosComponent implements OnInit {
   todos:Object;
   user:Object;
   showCompleted:Boolean=true;
-  todoMode:String="all";
+  todoMode:String="All";
   persons:any;
   selectedID:number;
 
   ngOnInit() {
   	this.data.getTodos(this.user).subscribe(data => this.todos = data);
   	this.persons=[
-  		{"name":"All","id":0},
+  		{"name":"Any","id":0},
   		{"name":"Leanne Graham","id":1},
   		{"name":"Ervin Howell","id":2},
   		{"name":"Clementine Bauch","id":3},
@@ -36,6 +36,7 @@ export class TodosComponent implements OnInit {
   		{"name":"Clementina DuBuque","id":10}
   		];
   	this.selectedID=0;
+
   }
 
   getUser(userID) {

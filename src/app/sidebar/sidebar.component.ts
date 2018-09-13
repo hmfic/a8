@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, Route, Routes, NavigationEnd } from '@angular/router';
 import { SidebarService } from "../sidebar/sidebar.service";
 import { MatSidenav } from '@angular/material';
+import { Globals } from '../globals'
 
 @Component({
   selector: 'app-sidebar',
@@ -13,12 +14,17 @@ export class SidebarComponent implements OnInit {
 	currentURL: string;
   @ViewChild('sidebar') public sidebar: MatSidenav;
   	constructor( 
-      private sidebarService: SidebarService
+      private sidebarService: SidebarService,
+      private globals: Globals
       ) { 
   		// console.log("")
   		//router.events.subscribe((_ : NavigationEnd) => this.currentURL = _.url);
 		}
-
+  getBackground (theme){
+    //console.log("in getbackground; theme=",theme);
+    if (theme == "dark-theme") return "sidenav-links-light"
+      else return "sidenav-links-dark"
+  }
 
   ngOnInit() {
     this.sidebarService.setSidebar(this.sidebar);

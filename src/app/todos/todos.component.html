@@ -2,7 +2,7 @@
 <mat-grid-list cols="2" rowHeight="8:1">
 		<mat-grid-tile style="text-align: left;">
 			<div class="bogus">
-				<h1 style="display: flex;align-items: center;"><i class="material-icons blue" style="font-size: 2.5rem !important ">list</i> &nbsp;To dos</h1>
+				<h1 style="display: flex;align-items: center;"><i class="material-icons blue" style="font-size: 2.5rem !important ">list</i>&nbsp;{{todoMode}}&nbsp;To-Do's&nbsp;for {{persons[selectedID].name}}</h1>
 			</div>
 		</mat-grid-tile>
 		<mat-grid-tile>
@@ -17,9 +17,9 @@
 			</mat-form-field>
 
 			<mat-radio-group [(ngModel)]="todoMode">
-		       <mat-radio-button value="all" class="mat-primary">All </mat-radio-button> &nbsp;
-		       <mat-radio-button value="completed">Completed </mat-radio-button> &nbsp;
-		       <mat-radio-button value="open">Open </mat-radio-button>
+		       <mat-radio-button value="All" class="mat-primary">All </mat-radio-button> &nbsp;
+		       <mat-radio-button value="Completed">Completed </mat-radio-button> &nbsp;
+		       <mat-radio-button value="Open">Open </mat-radio-button>
 		    </mat-radio-group>
 		</mat-grid-tile>
 </mat-grid-list>
@@ -31,7 +31,7 @@
 		<span *ngFor="let todo of todos">
 			<!-- <mat-grid-tile *ngIf="(showCompleted || !todo.completed)" >-->
 			<!-- <mat-grid-tile *ngIf="(showCompleted || !todo.completed) && (getUser(todo.userId).id==selectedID || selectedID==0)" >  -->
-			<mat-grid-tile *ngIf="(todoMode=='all' || (todoMode == 'completed' && todo.completed == true) || (todoMode == 'open' && todo.completed == false)) && (getUser(todo.userId).id==selectedID || selectedID==0) " >
+			<mat-grid-tile *ngIf="(todoMode=='All' || (todoMode == 'Completed' && todo.completed == true) || (todoMode == 'Open' && todo.completed == false)) && (getUser(todo.userId).id==selectedID || selectedID==0) " >
 				<mat-card style="width:80%;">
 					<mat-card-title>
 						<span *ngIf="todo.completed"><i class="material-icons green">check_box</i> {{todo.title}} </span>

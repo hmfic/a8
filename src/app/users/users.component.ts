@@ -12,7 +12,7 @@ import { Globals } from '../globals'
 export class UsersComponent implements OnInit {
 
   users:Object;
- 
+  distances:Object;
 
   constructor(
   	private data: DataService,
@@ -20,8 +20,8 @@ export class UsersComponent implements OnInit {
 
 
   ngOnInit() {
-  	this.data.getUsers().subscribe(data => this.users = data);
-  	this.data.getUsers().subscribe(data => this.globals.users = data);
+  	//this.data.getUsers().subscribe(data => this.users = data);
+  	//this.data.getUsers().subscribe(data => this.globals.users = data);
   	//this.globals.users=data;
   }
 

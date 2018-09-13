@@ -1,5 +1,8 @@
 # A8
 
+Make sure you have NPM installed and updated:
+```npm install -g npm``` to update
+
 Angular 6 (et al) installation notes
 
 ### one time stuff …
@@ -92,3 +95,12 @@ example:
 
 then add to app.modules:
 ```import { AgmCoreModule } from '@agm/core';```
+
+### D3
+```npm install d3```
+```npm i @types/d3 @types/socket.io-client -D``` this is optional in case you want sockets
+```import * as d3 from "d3";``` iin your app.config.ts
+
+then add to app modules
+
+don't forget encapsulation in d3 modules to avoid rewriting the styles
