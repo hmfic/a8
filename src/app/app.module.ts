@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCardModule, MatSidenavModule, MatGridListModule, MatCheckboxModule, 
          MatToolbarModule, MatListModule, MatMenuModule, MatDialogModule, MatFormFieldModule, 
          MatSelectModule, MatInputModule } from '@angular/material';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { OverlayModule} from '@angular/cdk/overlay';
@@ -54,6 +55,7 @@ import { HelpmodalComponent } from './helpmodal/helpmodal.component';
     MatGridListModule,
     MatSidenavModule,
     MatToolbarModule,
+    MatTooltipModule,
     MatListModule,
     MatMenuModule,
     MatDialogModule,

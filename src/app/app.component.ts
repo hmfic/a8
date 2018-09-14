@@ -4,7 +4,6 @@ import { Globals } from './globals';
 import { CookieService } from 'ngx-cookie-service';
 import { DataService } from './data.service';
 import { Routes, Route, Router } from '@angular/router';
-//import '../../../rxjs/add/operator/mergeMap';
 import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
 
 @Component({

@@ -35,7 +35,7 @@ export class MenubarComponent implements OnInit {
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
               id: 1,
-              title: 'My settings'
+              title: 'Settings'
           };
         // dialogConfig.direction = "rtl";
         this.dialog.open(JmodalComponent, dialogConfig);
@@ -59,11 +59,12 @@ export class MenubarComponent implements OnInit {
         dialogConfig.autoFocus = true;
         dialogConfig.data = {
               id: 1,
-              title: 'My settings'
+              title: 'Help'
           };
         // dialogConfig.direction = "rtl";
         this.dialog.open(HelpmodalComponent, dialogConfig);
     } 
+
 
   ngOnInit() { }
  }

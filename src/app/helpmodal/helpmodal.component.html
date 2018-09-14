@@ -1,8 +1,8 @@
-<h2 mat-dialog-title>About the Application8 demo</h2>
-<mat-dialog-content style="line-height: 1.7rem;">
+<h1 mat-dialog-title>About the Application8 demo</h1>
+<mat-dialog-content style="line-height: 1.5rem;">
 	<ul>
 		<li>
-			Application8 mimics a simple social media system using pubically available dummy data
+			Application8 mocks a simple social media system using pubically available dummy data
 		</li>
 		<li>
 			Everything is my original work (no borrowing from other places)
@@ -11,7 +11,7 @@
 			Everything was done with Angular 6 (6.1.6), Typescript (2.7.2) and NodeJS (10.9.0)
 		</li>
 		<li>
-			Everything uses Material Design for UI components exclusively
+			Everything uses Material Design for UI components
 		</li>
 		<li>
 			Charts are dynamically created using hand-built D3.js(v4)
@@ -35,13 +35,28 @@
 			Settings are stored in the browser local store so they persist across sessions
 		</li>
 		<li>
-			Everything is stored and managed in git
+			Everything is stored and managed in git https://github.com/hmfic/a8
 		</li>
 		<li>
-			It took around 1.5 weeks elapsed time (evenings and weekend)
+			Responsive - runs on iPads, etc <span (mouseover)="showIpad=true" ><i class="material-icons blue" style="font-size: .8rem;">open_in_new</i></span>
+		</li>
+		<li>
+			It took around 1700 lines of Typescript and 1.5 weeks elapsed time (in the evenings and weekend)
 		</li>
 	</ul>
+	<br/>
+	<!--
+		<ul *ngIf="isMenuOpen" [@animationOption2]="isMenuOpen ? 'open': 'close'">
+	-->
+	
+	
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button [mat-dialog-close]="true">Done</button>
 </mat-dialog-actions>
+
+<div *ngIf="showIpad" [@animationOption]="showIpad ? 'open':'close'" style="position: absolute;top:100px;left:200px;" (mouseout)="showIpad=false">
+	<div align="center"  >
+		<img src="../assets/ipad.png" height="500" width="750">
+	</div>
+</div>
