@@ -30,6 +30,8 @@ import { UsergraphsComponent } from './usergraphs/usergraphs.component';
 import { select, selectAll } from "d3-selection";
 import { HelpmodalComponent } from './helpmodal/helpmodal.component';
 
+import { MatIconModule } from "@angular/material/icon";
+
 
 @NgModule({
   declarations: [
@@ -53,6 +55,7 @@ import { HelpmodalComponent } from './helpmodal/helpmodal.component';
     MatCheckboxModule,
     MatCardModule,
     MatGridListModule,
+    MatIconModule,
     MatSidenavModule,
     MatToolbarModule,
     MatTooltipModule,

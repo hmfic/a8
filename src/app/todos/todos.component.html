@@ -17,9 +17,9 @@
 			</mat-form-field>
 
 			<mat-radio-group [(ngModel)]="todoMode">
-		       <mat-radio-button value="All" class="mat-primary">All </mat-radio-button> &nbsp;
-		       <mat-radio-button value="Completed">Completed </mat-radio-button> &nbsp;
-		       <mat-radio-button value="Open">Open </mat-radio-button>
+		       <mat-radio-button value="All" class="mat-primary" matTooltip="Show to-do's for both completed and open items">All </mat-radio-button> &nbsp;
+		       <mat-radio-button value="Completed" matTooltip="Show only completed to-do items">Completed </mat-radio-button> &nbsp;
+		       <mat-radio-button value="Open" matTooltip="Show open to-do items">Open </mat-radio-button>
 		    </mat-radio-group>
 		</mat-grid-tile>
 </mat-grid-list>

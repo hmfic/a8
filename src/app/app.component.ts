@@ -27,10 +27,11 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
   cookieValue:string = 'UNKNOWN';
   oldTheme:string = "UNDEFINED";
   oldName:string;
-  //lon$:number;
+  //gender:any;
   //lat$:number;
   result:any;
   expiredDate:Date;
+  locali:number;
   
   ngOnInit(): void {
     // look for theme cookie
@@ -54,7 +55,9 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
     this.globals.title="Application8";
     this.globals.name="Unknown";
     this.globals.users=[];
+    this.globals.gender=[];
     this.globals.comments=[];
+    //this.gender=[];
     this.oldTheme = this.globals.theme;
 // check for name in cookies
     const cookieExists2: boolean = this.cookieService.check('name');
@@ -91,74 +94,25 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
           this.result=this.data.getDistance(this.globals.users[i].address.geo.lat,this.globals.users[i].address.geo.lng,this.globals.myinfo.lat,this.globals.myinfo.lon,"K");
           this.globals.users[i].dist = this.result;
         }
-        // get the gender
-
-        //this.data.getGender(this.globals.users[i].name).subscribe (gdata => {
-        //    console.log("after getgender;gdata=",gdata.gender);
-        //    if(typeof this.globals.users[i] === "undefined") {
-        //      console.log("global users udefined");
-        //    }
-        //    this.globals.users[i].gender=gdata.gender;
-        //  })
-        
+        this.data.getGender(this.globals.users[i].name).subscribe (gdata => {
+            //console.log("after getgender;gdata=",gdata.gender);
+            //if(typeof this.globals.users[i] === "undefined") {
+            //  console.log("global users undefined");
+            //}
+            //this.globals.users[i].gender=gdata.gender;
+            console.log("pushing gender");
+            this.globals.gender.push(gdata);
+            console.log("just set gender array i;data=",i,":",this.globals.gender);
+          })
 
         //console.log("done screwing with global user array; users=",this.globals.users);
         } // end for loop
       },error => {console.log("getusers error");
     }); // end subscribe 
-    //*******************END ORIGINAL***********************
 
-//*********************** NEW **********************
-
-    /* this.data.getUsers()
-        .pipe(map((data2)=>{console.log("data=",data2); }));
-
-    //this.result = this.http.get('/api/people/1').pipe(
-    //  mergeMap(character => this.http.get(character.homeworld))
-    //);
-
-
-    this.data.getUsers()
-       .pipe(map(data=>data),
-        mergeMap((response:any)=>{
-        console.log("after first pipe, mergemap; data=",response);
-        const param2= response;
-        return this.data.getGender("Jane")
-                .pipe(map((result:any)=>{
-                  console.log("returning result=",result);
-                  return result;
-          }))         
-       })); // end mergemap and two pipes */
-//*********************** NEW **********************
     this.data.getComments().subscribe(data => {this.globals.comments = data},error => {console.log("getcomments error");}
       );
   }
-
-  /*
-  this.userService.getUser()
-        .flatMap(u => {
-            this.user = u; // save the user
-            return Observable.of(u); // pass on the Observable
-        })
-        .flatMap(u => this.userService.getPreferences(this.user.username)) // get the preferences for this user
-        .map(p => {
-            this.preferences = p; // save the preferences
-        })
-        .subscribe();
-
-
-
-  return this.testService.testMethod1(param1)
-       .pipe(map(data=>data),
-        mergeMap((response:any)=>{
-         const param2= response;
-         return this.testService.testMethod2(param2)
-                .pipe(map((result:any)=>{
-                  return result;
-          }))         
-       }));
-  */
-
 
    ngDoCheck() {
      if (this.oldTheme != this.globals.theme) {

@@ -2,25 +2,22 @@
 <mat-dialog-content style="line-height: 1.5rem;">
 	<ul>
 		<li>
-			Application8 mocks a simple social media system using pubically available dummy data
+			Application8 mocks a simple project management system using pubicly available dummy data
 		</li>
 		<li>
-			Everything is my original work (no borrowing from other places)
+			Everything is my original work (no starter kits or helpers)
 		</li>
 		<li>
 			Everything was done with Angular 6 (6.1.6), Typescript (2.7.2) and NodeJS (10.9.0)
 		</li>
 		<li>
-			Everything uses Material Design for UI components
+			Everything uses Material Design 2 for UI components
 		</li>
 		<li>
 			Charts are dynamically created using hand-built D3.js(v4)
 		</li>
 		<li>
-			The dummy data is available at https://jsonplaceholder.typicode.com/
-		</li>
-		<li>
-			The data is dynamically retrieved in JSON using asynchronous REST calls
+			The dummy data is dynamically accessed at https://jsonplaceholder.typicode.com/ using REST GETs
 		</li>
 		<li>
 			The geolocation service is dynamically retrieved from http://ip-api.com/json
@@ -52,7 +49,7 @@
 	
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button [mat-dialog-close]="true">Done</button>
+  <button mat-button [mat-dialog-close]="true" color="primary">Done</button>
 </mat-dialog-actions>
 
 <div *ngIf="showIpad" [@animationOption]="showIpad ? 'open':'close'" style="position: absolute;top:100px;left:200px;" (mouseout)="showIpad=false">
