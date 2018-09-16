@@ -27,64 +27,82 @@ import { Globals } from "../globals";
       //let self = this;
       //let d3 = this.d3; // <-- for convenience use a block scope variable
       let svg = d3.select('svg');
-      let height=+svg.attr('width');
-      let width=+svg.attr('width');
-      //let d3ParentElement: Selection<HTMLElement, any, null, undefined>;
-      //let d3ParentElement: Selection<any, any, any, any>;
-      //let d3Svg: Selection<SVGSVGElement, any, null, undefined>;
-      var nodes= [
-              {'id': 'Alice'},
-              {'id': 'Bob'},
-              {'id': 'Cathy'}
-            ];
-      var links=[
-              {'source': 'Alice', 'target': 'Bob'},
-              {'source': 'Bob', 'target': 'Cathy'},
-              {'source': 'Cathy', 'target': 'Alice'},
-            ];
+      let height=500;
+      let width=700;
 
-          console.log("height:width",height,":",width);
+      var nodes=[];
+      var links=[];
+      var holdem=0;
+      for (var i=0;i<this.globals.todos.length;i++) {
+              nodes.push({"id":this.globals.todos[i].id } );
+              holdem++;
+            };
+      for (var i=0;i<this.globals.users.length;i++) {
+        nodes.push({"id":this.globals.users[i].id+holdem});
+        } 
+      // OK, all the nodes have been pushed with hopefully unique IDs, match them up now
 
-          // const color = d3.scaleOrdinal(d3.schemeCategory20);
+      for(var i=0;i<this.globals.todos.length;i++) {
+         
+        // for (var j=0;j< nodes.length;j++) {
+        for (var j=0;j< nodes.length;j++) {
+            // console.log("looking to test this.globals.todos[i].userId and nodes[j].name", this.globals.todos[i].userId,":",nodes[j].id)
+            if(this.globals.todos[i].userId == nodes[j].id) {
+                console.log("found match");
+                if (this.globals.todos[i].id != nodes[j].id ) {
+                    links.push(  { "source": this.globals.todos[i].id  , "target":nodes[j].id  } );
+                  }
+                
+               } // end if
+        }
 
-          var simulation = d3.forceSimulation()
-            //.force('link', d3.forceLink().id((d: any) => d.id))
-            .force("link", d3.forceLink().id(function(d:any) { console.log("in forcelink;d.id=",d.id);return d.id; }))
-            .force('charge', d3.forceManyBody());
-            ///.force('center', d3.forceCenter([width / 2, height / 2)]);
+          } // end outer for
 
-          var link = svg.append('g')
-            .attr('class', 'links')
-            .selectAll('line')
-            .data(links)
-            .enter()
-            .append('line')
-            .attr("stroke","red")
-            .attr('stroke-width', "1px");
+       console.log("after data setup;nodes=",nodes);
+       console.log("after data setup;links=",links);
 
-          var node = svg.append('g')
-            .attr('class', 'nodes')
-            .selectAll('circle')
-            .data(nodes)
-            .enter()
-            .append('circle')
-            .attr('r', 5)
-            .attr('fill', "green");
+      var simulation = d3.forceSimulation()
+        //.force('link', d3.forceLink().id((d: any) => d.id))
+        .force("link", d3.forceLink().id(function(d:any) {return d.id; }))
+        .force('charge', d3.forceManyBody())
+        .force('center', d3.forceCenter(width / 2, height / 2));
 
-          node.append("title")
-              .text(function(d) { return d.id; });
+      var link = svg.append('g')
+        .attr('class', 'links')
+        .selectAll('line')
+        .data(links)
+        .enter()
+        .append('line')
+        .attr("stroke","red")
+        .attr('stroke-width', "1px");
 
-          svg.selectAll('circle').call(d3.drag()
-              .on('start', dragstarted)
-              .on('drag', dragged)
-              .on('end', dragended)
-            );
+      var node = svg.append('g')
+        .attr('class', 'nodes')
+        .selectAll('circle')
+        .data(nodes)
+        .enter()
+        .append('circle')
+        .attr('r', 5)
+        .attr('fill', "green");
 
-          simulation.nodes(nodes).on('tick', ticked);
-          //simulation.force("link").links(links);
-          simulation.force<d3.ForceLink<any, any>>('link').links(links);
-      //} // end if parentelement != null
+      var text=svg.append('g')
+        .attr('class', 'labels')
+        .selectAll('text')
+        .data(nodes)
+        .enter()
+        .append("text")
+        .attr('class','label')
+        .text(function(d) { return d.id; });
 
+      svg.selectAll('circle').call(d3.drag()
+          .on('start', dragstarted)
+          .on('drag', dragged)
+          .on('end', dragended)
+        );
+
+      simulation.nodes(nodes).on('tick', ticked);
+      //simulation.force("link").links(links);
+      simulation.force<d3.ForceLink<any, any>>('link').links(links);
 
 
 	  function ticked() {
@@ -97,7 +115,18 @@ import { Globals } from "../globals";
         node
           .attr('cx', function(d: any) { return d.x; })
           .attr('cy', function(d: any) { return d.y; });
+
+        text
+          .attr('x', function(d: any) { return d.x -4; })
+          .attr('y', function(d: any) { return d.y +15; });
+
 		  } // end ticked
+
+      /*
+      d3.selectAll(".gtext")
+                           .attr("x", function (d) { return d.x -5; })
+                           .attr("y", function (d) { return d.y; });
+      */
 
 
     function dragstarted(d) {

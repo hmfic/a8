@@ -25,3 +25,14 @@
     stroke: steelblue;
     stroke-width: 1.5px;
 }
+
+.node text {
+  pointer-events: none;
+  
+}
+
+.label {
+    fill: none;
+    stroke:#444;
+    font: 8px sans-serif;
+}
