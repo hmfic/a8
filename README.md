@@ -100,6 +100,12 @@ then add to app.modules:
 ```npm install d3```
 ```npm i @types/d3 @types/socket.io-client -D``` this is optional in case you want sockets
 ```import * as d3 from "d3";``` iin your app.config.ts
+```npm install --save-dev @types/d3```
+
+or 
+```npm install @types/d3-array --save```
+
+need typiing? ```npm install --save-dev @types/node```
 
 then add to app modules
 

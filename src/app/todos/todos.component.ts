@@ -21,7 +21,11 @@ export class TodosComponent implements OnInit {
   selectedID:number;
 
   ngOnInit() {
-  	this.data.getTodos(this.user).subscribe(data => this.todos = data);
+  	this.data.getTodos(this.user).subscribe(data => {
+      this.todos = data;
+      this.globals.todos=this.todos;}
+      );
+    
   	this.persons=[
   		{"name":"Any","id":0},
   		{"name":"Leanne Graham","id":1},
@@ -47,7 +51,7 @@ export class TodosComponent implements OnInit {
   			return this.globals.users[i];
   		}
   	}
-  	console.log("going to get user info in todos=",userID);
+  	//console.log("going to get user info in todos=",userID);
   	// return this.http.get('https://jsonplaceholder.typicode.com/users/' + userID)
   }
 

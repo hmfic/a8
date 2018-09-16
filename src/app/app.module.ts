@@ -32,6 +32,8 @@ import { HelpmodalComponent } from './helpmodal/helpmodal.component';
 
 import { MatIconModule } from "@angular/material/icon";
 
+import { D3Service } from 'd3-ng2-service';
+
 
 @NgModule({
   declarations: [
@@ -76,7 +78,8 @@ import { MatIconModule } from "@angular/material/icon";
   providers: [
     Globals, 
     CookieService,
-    SidebarService
+    SidebarService,
+    D3Service
     ],
   bootstrap: [AppComponent],
   entryComponents: [ JmodalComponent, HelpmodalComponent ]

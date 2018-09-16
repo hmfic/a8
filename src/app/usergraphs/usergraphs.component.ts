@@ -1,13 +1,9 @@
 import { Component, OnInit, ViewEncapsulation} from '@angular/core';
+import * as d3 from 'd3';
+// import { D3Service, D3, Selection } from 'd3-ng2-service';
+import { Globals } from "../globals";
 
-import * as d3 from 'd3-selection';
-import * as d3Scale from 'd3-scale';
-import * as d3Shape from 'd3-shape';
-import * as d3Array from 'd3-array';
-import * as d3Axis from 'd3-axis';
-
-import { STOCKS } from '../shared/stocks';
-
+//import {ForceLink} from 'd3-ng2-service';
 
 @Component({
   selector: 'app-usergraphs',
@@ -15,71 +11,132 @@ import { STOCKS } from '../shared/stocks';
   styleUrls: ['./usergraphs.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
-export class UsergraphsComponent implements OnInit {
-	title = 'Line Chart';
-    private margin = {top: 0, right: 20, bottom: 0, left: 50};
-    private width: number;
-    private height: number;
-    private x: any;
-    private y: any;
-    private svg: any;
-    private line: d3Shape.Line<[number, number]>;
 
-  constructor() { 
-  	this.width = 800 - this.margin.left - this.margin.right;
-  	this.height = 500 - this.margin.top - this.margin.bottom;
+  export class UsergraphsComponent implements OnInit {
+    // private d3: D3; // <-- Define the private member which will hold the d3 reference
+    //private parentNativeElement: any;
+    //private d3Svg: Selection<SVGSVGElement, any, null, undefined>;
 
-     }
-
-    ngOnInit() {
-  	 this.initSvg();
-     this.initAxis();
-     this.drawAxis();
-     this.drawLine();
+  constructor(
+        private globals: Globals) { 
+    //this.d3 = d3Service.getD3(); // <-- obtain the d3 object from the D3 Service
+    //this.parentNativeElement = element.nativeElement;
     }
 
-	private initSvg() {
-	    this.svg = d3.select('svg')
-	    	.attr("width", this.width)
-        	.attr("height", this.height)
-	        .append('g')
-	        	.attr('transform', 'translate(' + (this.margin.left-10) + ',' + (this.margin.top-20) + ')');
-	  }
+    ngOnInit() {
+      //let self = this;
+      //let d3 = this.d3; // <-- for convenience use a block scope variable
+      let svg = d3.select('svg');
+      let height=+svg.attr('width');
+      let width=+svg.attr('width');
+      //let d3ParentElement: Selection<HTMLElement, any, null, undefined>;
+      //let d3ParentElement: Selection<any, any, any, any>;
+      //let d3Svg: Selection<SVGSVGElement, any, null, undefined>;
+      var nodes= [
+              {'id': 'Alice'},
+              {'id': 'Bob'},
+              {'id': 'Cathy'}
+            ];
+      var links=[
+              {'source': 'Alice', 'target': 'Bob'},
+              {'source': 'Bob', 'target': 'Cathy'},
+              {'source': 'Cathy', 'target': 'Alice'},
+            ];
 
-	private initAxis() {
-	    this.x = d3Scale.scaleTime().range([0, this.width]);
-	    this.y = d3Scale.scaleLinear().range([this.height, 0]);
-	    this.x.domain(d3Array.extent(STOCKS, (d) => d.date ));
-	    this.y.domain(d3Array.extent(STOCKS, (d) => d.value ));
-	  }
+          console.log("height:width",height,":",width);
 
-	private drawAxis() {
-	    this.svg.append('g')
-	        .attr('class', 'axis axis--x')
-	        .attr('transform', 'translate(0,' + this.height + ')')
-	        .call(d3Axis.axisBottom(this.x));
+          // const color = d3.scaleOrdinal(d3.schemeCategory20);
 
-	    this.svg.append('g')
-	        .attr('class', 'axis axis--y')
-	        .call(d3Axis.axisLeft(this.y))
-	        .append('text')
-	        .attr('class', 'axis-title')
-	        .attr('transform', 'rotate(-90)')
-	        .attr('y', 6)
-	        .attr('dy', '.71em')
-	        .style('text-anchor', 'end')
-	        .text('Price ($)');
-	  }
+          var simulation = d3.forceSimulation()
+            //.force('link', d3.forceLink().id((d: any) => d.id))
+            .force("link", d3.forceLink().id(function(d:any) { console.log("in forcelink;d.id=",d.id);return d.id; }))
+            .force('charge', d3.forceManyBody());
+            ///.force('center', d3.forceCenter([width / 2, height / 2)]);
 
-	private drawLine() {
-	    this.line = d3Shape.line()
-	        .x( (d: any) => this.x(d.date) )
-	        .y( (d: any) => this.y(d.value) );
+          var link = svg.append('g')
+            .attr('class', 'links')
+            .selectAll('line')
+            .data(links)
+            .enter()
+            .append('line')
+            .attr("stroke","red")
+            .attr('stroke-width', "1px");
 
-	    this.svg.append('path')
-	        .datum(STOCKS)
-	        .attr('class', 'line')
-	        .attr('d', this.line);
-      }
+          var node = svg.append('g')
+            .attr('class', 'nodes')
+            .selectAll('circle')
+            .data(nodes)
+            .enter()
+            .append('circle')
+            .attr('r', 5)
+            .attr('fill', "green");
 
-  }
+          node.append("title")
+              .text(function(d) { return d.id; });
+
+          svg.selectAll('circle').call(d3.drag()
+              .on('start', dragstarted)
+              .on('drag', dragged)
+              .on('end', dragended)
+            );
+
+          simulation.nodes(nodes).on('tick', ticked);
+          //simulation.force("link").links(links);
+          simulation.force<d3.ForceLink<any, any>>('link').links(links);
+      //} // end if parentelement != null
+
+
+
+	  function ticked() {
+		    link
+          .attr('x1', function(d: any) { return d.source.x; })
+          .attr('y1', function(d: any) { return d.source.y; })
+          .attr('x2', function(d: any) { return d.target.x; })
+          .attr('y2', function(d: any) { return d.target.y; });
+
+        node
+          .attr('cx', function(d: any) { return d.x; })
+          .attr('cy', function(d: any) { return d.y; });
+		  } // end ticked
+
+
+    function dragstarted(d) {
+          if (!d3.event.active) { simulation.alphaTarget(0.3).restart(); }
+          d.fx = d.x;
+          d.fy = d.y;
+        }
+
+        function dragged(d) {
+          d.fx = d3.event.x;
+          d.fy = d3.event.y;
+        }
+
+        function dragended(d) {
+          if (!d3.event.active) { simulation.alphaTarget(0); }
+          d.fx = null;
+          d.fy = null;
+        }
+
+   }  // end nginit
+} // end  export class UsergraphsComponent
+
+
+ //console.log('D3.js version:', d3['version']);
+      // this.mydata={nodes:[],links:[]};
+      // push all the links onto the stack
+ /*     for (var i=0;i<this.globals.todos.length;i++) {
+        this.mydata.nodes.push({"id":this.globals.todos[i].userId,"name":this.globals.todos[i].title } );
+      };
+      for (var i=0;i<this.globals.users.length;i++) {
+        // push the user once, then loop through the todos for the users assigned todos
+        this.mydata.nodes.push({"id":this.globals.users[i].id,"name":this.globals.users[i].name});
+        // go back and look thru the todos for the user
+        for(var j=0;j<this.globals.todos.length;j++) {
+          //console.log("before check; this.globals.todos[j].userId : this.globals.users[i].id",this.globals.todos[j].userId,":",this.globals.users[i].id)
+          if(this.globals.todos[j].userId == this.globals.users[i].id) {
+            //console.log("found match");
+            this.mydata.links.push(  { "source":{ "id":this.globals.todos[j].id  }  ,  "target":{ "id":this.globals.todos[j].userId } } );
+            }
+          
+          }
+        }; */

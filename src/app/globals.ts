@@ -9,4 +9,5 @@ export class Globals {
   comments:any;
   myinfo:any;
   gender:any;
+  todos:any;
 }

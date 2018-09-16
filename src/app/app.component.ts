@@ -5,6 +5,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { DataService } from './data.service';
 import { Routes, Route, Router } from '@angular/router';
 import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
+// import * as d3 from "d3";
 
 @Component({
   selector: 'app-root',
@@ -100,9 +101,9 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
             //  console.log("global users undefined");
             //}
             //this.globals.users[i].gender=gdata.gender;
-            console.log("pushing gender");
+            //console.log("pushing gender");
             this.globals.gender.push(gdata);
-            console.log("just set gender array i;data=",i,":",this.globals.gender);
+            //console.log("just set gender array i;data=",i,":",this.globals.gender);
           })
 
         //console.log("done screwing with global user array; users=",this.globals.users);

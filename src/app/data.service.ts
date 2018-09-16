@@ -35,7 +35,7 @@ export class DataService {
 
   getGender(name) {
     name=name.split(" ")[0];
-    console.log("about to call gendererizer; name=",name);
+    //console.log("about to call gendererizer; name=",name);
     return this.http.get('https://api.genderize.io/?name=' + name)
   }
 
