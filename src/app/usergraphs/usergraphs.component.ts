@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation} from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
 import * as d3 from 'd3';
 // import { D3Service, D3, Selection } from 'd3-ng2-service';
 import { Globals } from "../globals";
@@ -13,32 +13,45 @@ import { Globals } from "../globals";
 })
 
   export class UsergraphsComponent implements OnInit {
-    // private d3: D3; // <-- Define the private member which will hold the d3 reference
-    //private parentNativeElement: any;
-    //private d3Svg: Selection<SVGSVGElement, any, null, undefined>;
+    @ViewChild('forceDirectedChartContainer')
+    private chartContainer: ElementRef;
+    hostElement: any;
 
   constructor(
-        private globals: Globals) { 
-    //this.d3 = d3Service.getD3(); // <-- obtain the d3 object from the D3 Service
-    //this.parentNativeElement = element.nativeElement;
-    }
+        private globals: Globals,
+        private elementRef:ElementRef) {  }
 
     ngOnInit() {
+      this.hostElement = this.chartContainer.nativeElement;
+      console.log("element host width=",this.hostElement.offsetWidth);
+      console.log("element host height=",this.hostElement.offsetHeight);
+      console.log("element host =",this.hostElement);
       //let self = this;
-      //let d3 = this.d3; // <-- for convenience use a block scope variable
-      let svg = d3.select('svg');
-      let height=500;
-      let width=700;
+
+      let width=this.hostElement.offsetWidth -70;
+      let height=this.hostElement.offsetHeight -70;
+
+      var zoom = d3.zoom()
+         .scaleExtent([.2,10])
+         .on("zoom",zoomed);
+
+      let svg = d3.select(this.hostElement)
+        .append('svg')
+        .attr('width',width)
+        .attr('height',height)
+        .call(zoom)
+        .append('g');
+
 
       var nodes=[];
       var links=[];
       var holdem=0;
       for (var i=0;i<this.globals.todos.length;i++) {
-              nodes.push({"id":this.globals.todos[i].id } );
+              nodes.push({"id":this.globals.todos[i].id, "userid":this.globals.todos[i].userId, "name":"To-do", "type":"todo"} );
               holdem++;
             };
       for (var i=0;i<this.globals.users.length;i++) {
-        nodes.push({"id":this.globals.users[i].id+holdem});
+        nodes.push({"id":this.globals.users[i].id+holdem,"userid":this.globals.users[i].id, "name":this.globals.users[i].name, "type":"user"});
         } 
       // OK, all the nodes have been pushed with hopefully unique IDs, match them up now
 
@@ -47,9 +60,10 @@ import { Globals } from "../globals";
         // for (var j=0;j< nodes.length;j++) {
         for (var j=0;j< nodes.length;j++) {
             // console.log("looking to test this.globals.todos[i].userId and nodes[j].name", this.globals.todos[i].userId,":",nodes[j].id)
-            if(this.globals.todos[i].userId == nodes[j].id) {
-                console.log("found match");
-                if (this.globals.todos[i].id != nodes[j].id ) {
+            if(this.globals.todos[i].userId == nodes[j].userid) {
+                //console.log("found match");
+                // if (this.globals.todos[i].id != nodes[j].id ) {
+                if (nodes[j].type!="todo") {
                     links.push(  { "source": this.globals.todos[i].id  , "target":nodes[j].id  } );
                   }
                 
@@ -58,8 +72,8 @@ import { Globals } from "../globals";
 
           } // end outer for
 
-       console.log("after data setup;nodes=",nodes);
-       console.log("after data setup;links=",links);
+       //console.log("after data setup;nodes=",nodes);
+       //console.log("after data setup;links=",links);
 
       var simulation = d3.forceSimulation()
         //.force('link', d3.forceLink().id((d: any) => d.id))
@@ -67,13 +81,15 @@ import { Globals } from "../globals";
         .force('charge', d3.forceManyBody())
         .force('center', d3.forceCenter(width / 2, height / 2));
 
+
       var link = svg.append('g')
         .attr('class', 'links')
         .selectAll('line')
         .data(links)
         .enter()
         .append('line')
-        .attr("stroke","red")
+        .attr("stroke","gray")
+        .attr("opacity",.5)
         .attr('stroke-width', "1px");
 
       var node = svg.append('g')
@@ -82,8 +98,16 @@ import { Globals } from "../globals";
         .data(nodes)
         .enter()
         .append('circle')
-        .attr('r', 5)
-        .attr('fill', "green");
+        .attr('r', function(d) {
+          if (d.type == "user") 
+            {return 10} else 
+            {return 5}
+        })
+        .attr('fill', function(d) {
+          //console.log("in node svg append;d=",d);
+          if (d.type == "user") 
+            {return "green"} else 
+            {return "blue"}});
 
       var text=svg.append('g')
         .attr('class', 'labels')
@@ -92,7 +116,9 @@ import { Globals } from "../globals";
         .enter()
         .append("text")
         .attr('class','label')
-        .text(function(d) { return d.id; });
+        .text(function(d) { return d.name; });
+
+      
 
       svg.selectAll('circle').call(d3.drag()
           .on('start', dragstarted)
@@ -122,12 +148,6 @@ import { Globals } from "../globals";
 
 		  } // end ticked
 
-      /*
-      d3.selectAll(".gtext")
-                           .attr("x", function (d) { return d.x -5; })
-                           .attr("y", function (d) { return d.y; });
-      */
-
 
     function dragstarted(d) {
           if (!d3.event.active) { simulation.alphaTarget(0.3).restart(); }
@@ -135,37 +155,21 @@ import { Globals } from "../globals";
           d.fy = d.y;
         }
 
-        function dragged(d) {
-          d.fx = d3.event.x;
-          d.fy = d3.event.y;
-        }
+    function dragged(d) {
+      d.fx = d3.event.x;
+      d.fy = d3.event.y;
+    }
 
-        function dragended(d) {
-          if (!d3.event.active) { simulation.alphaTarget(0); }
-          d.fx = null;
-          d.fy = null;
-        }
+    function dragended(d) {
+      if (!d3.event.active) { simulation.alphaTarget(0); }
+      d.fx = null;
+      d.fy = null;
+    }
+
+    function zoomed() {
+        svg.attr("transform", d3.event.transform);
+      };
 
    }  // end nginit
 } // end  export class UsergraphsComponent
 
-
- //console.log('D3.js version:', d3['version']);
-      // this.mydata={nodes:[],links:[]};
-      // push all the links onto the stack
- /*     for (var i=0;i<this.globals.todos.length;i++) {
-        this.mydata.nodes.push({"id":this.globals.todos[i].userId,"name":this.globals.todos[i].title } );
-      };
-      for (var i=0;i<this.globals.users.length;i++) {
-        // push the user once, then loop through the todos for the users assigned todos
-        this.mydata.nodes.push({"id":this.globals.users[i].id,"name":this.globals.users[i].name});
-        // go back and look thru the todos for the user
-        for(var j=0;j<this.globals.todos.length;j++) {
-          //console.log("before check; this.globals.todos[j].userId : this.globals.users[i].id",this.globals.todos[j].userId,":",this.globals.users[i].id)
-          if(this.globals.todos[j].userId == this.globals.users[i].id) {
-            //console.log("found match");
-            this.mydata.links.push(  { "source":{ "id":this.globals.todos[j].id  }  ,  "target":{ "id":this.globals.todos[j].userId } } );
-            }
-          
-          }
-        }; */
