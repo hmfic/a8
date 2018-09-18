@@ -1,9 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
 import * as d3 from 'd3';
-// import { D3Service, D3, Selection } from 'd3-ng2-service';
 import { Globals } from "../globals";
-
-//import {ForceLink} from 'd3-ng2-service';
 
 @Component({
   selector: 'app-usergraphs',
@@ -19,21 +16,25 @@ import { Globals } from "../globals";
 
   constructor(
         private globals: Globals,
-        private elementRef:ElementRef) {  }
+        private elementRef:ElementRef,
+        ) {  }
 
     ngOnInit() {
       this.hostElement = this.chartContainer.nativeElement;
-      console.log("element host width=",this.hostElement.offsetWidth);
-      console.log("element host height=",this.hostElement.offsetHeight);
-      console.log("element host =",this.hostElement);
-      //let self = this;
+      //console.log("element host width=",this.hostElement.offsetWidth);
+      //console.log("element host height=",this.hostElement.offsetHeight);
+      //console.log("element host =",this.hostElement);
 
-      let width=this.hostElement.offsetWidth -70;
-      let height=this.hostElement.offsetHeight -70;
+      let width=this.hostElement.offsetWidth -30;
+      let height=this.hostElement.offsetHeight -30;
 
       var zoom = d3.zoom()
          .scaleExtent([.2,10])
          .on("zoom",zoomed);
+
+      const div2 = d3.select("body").append('div2')
+          .attr('class', 'tooltip')
+          .style('opacity', 0);
 
       let svg = d3.select(this.hostElement)
         .append('svg')
@@ -42,22 +43,47 @@ import { Globals } from "../globals";
         .call(zoom)
         .append('g');
 
+      var defs = svg.append("defs");
+      var filter = defs.append("filter")
+              .attr("id", "drop-shadow")
+              .attr("height", "200%")
+              .attr("width", "200%");
+          // SourceAlpha refers to opacity of graphic that this filter will be applied to
+          // convolve that with a Gaussian with standard deviation 3 and store result
+          // in blur
+      filter.append("feGaussianBlur")
+          .attr("in", "SourceAlpha")
+          .attr("stdDeviation", 2)
+          .attr("result", "blur");
+      // translate output of Gaussian blur to the right and downwards with 2px
+      // store result in offsetBlur
+      filter.append("feOffset")
+          .attr("in", "blur")
+          .attr("dx", 1)
+          .attr("dy", 1)
+          .attr("result", "offsetBlur");
+      // overlay original SourceGraphic over translated blurred opacity by using
+      // feMerge filter. Order of specifying inputs is important!
+      var feMerge = filter.append("feMerge");
+
+      feMerge.append("feMergeNode")
+          .attr("in", "offsetBlur")
+      feMerge.append("feMergeNode")
+          .attr("in", "SourceGraphic");
 
       var nodes=[];
       var links=[];
       var holdem=0;
       for (var i=0;i<this.globals.todos.length;i++) {
-              nodes.push({"id":this.globals.todos[i].id, "userid":this.globals.todos[i].userId, "name":"To-do", "type":"todo"} );
+              nodes.push({"id":this.globals.todos[i].id, "userid":this.globals.todos[i].userId, "name":"To-do", "type":"todo","title":this.globals.todos[i].title,"completed": this.globals.todos[i].completed});
               holdem++;
             };
       for (var i=0;i<this.globals.users.length;i++) {
-        nodes.push({"id":this.globals.users[i].id+holdem,"userid":this.globals.users[i].id, "name":this.globals.users[i].name, "type":"user"});
+        nodes.push({"id":this.globals.users[i].id+holdem,"userid":this.globals.users[i].id, "name":this.globals.users[i].name, "type":"user", "email":this.globals.users[i].email,"company":this.globals.users[i].company.name,"gender":this.findGender(this.globals.users[i].name)});
         } 
       // OK, all the nodes have been pushed with hopefully unique IDs, match them up now
 
       for(var i=0;i<this.globals.todos.length;i++) {
-         
-        // for (var j=0;j< nodes.length;j++) {
         for (var j=0;j< nodes.length;j++) {
             // console.log("looking to test this.globals.todos[i].userId and nodes[j].name", this.globals.todos[i].userId,":",nodes[j].id)
             if(this.globals.todos[i].userId == nodes[j].userid) {
@@ -65,22 +91,19 @@ import { Globals } from "../globals";
                 // if (this.globals.todos[i].id != nodes[j].id ) {
                 if (nodes[j].type!="todo") {
                     links.push(  { "source": this.globals.todos[i].id  , "target":nodes[j].id  } );
-                  }
-                
+                  }   
                } // end if
-        }
-
+            }
           } // end outer for
 
        //console.log("after data setup;nodes=",nodes);
        //console.log("after data setup;links=",links);
 
       var simulation = d3.forceSimulation()
-        //.force('link', d3.forceLink().id((d: any) => d.id))
         .force("link", d3.forceLink().id(function(d:any) {return d.id; }))
-        .force('charge', d3.forceManyBody())
-        .force('center', d3.forceCenter(width / 2, height / 2));
-
+        .force('charge', d3.forceManyBody().strength(-20))
+        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('collision', d3.forceCollide().radius(25));
 
       var link = svg.append('g')
         .attr('class', 'links')
@@ -92,39 +115,88 @@ import { Globals } from "../globals";
         .attr("opacity",.5)
         .attr('stroke-width', "1px");
 
-      var node = svg.append('g')
-        .attr('class', 'nodes')
-        .selectAll('circle')
-        .data(nodes)
-        .enter()
-        .append('circle')
-        .attr('r', function(d) {
-          if (d.type == "user") 
-            {return 10} else 
-            {return 5}
-        })
+
+      var nodex = svg.append('g')
+            .attr('class', 'nodes');
+
+      var node = nodex.selectAll("g")
+            .data(nodes)
+            .enter()
+            .append("g")
+            .attr('class', 'node');
+
+      //node.append('circle')
+      var circle = node.append("circle")
+        .attr("cx",0)
+        .attr("cy", 0)
+        .attr('r', 15)
         .attr('fill', function(d) {
           //console.log("in node svg append;d=",d);
           if (d.type == "user") 
-            {return "green"} else 
-            {return "blue"}});
+            {return "lightgray"} else 
+            { if (d.completed == true) {
+              return "green"} else return "orange"}
+            })
+        .style("filter", function(d) {
+          if(d.type=="user") { return "url(#drop-shadow)"} else {return "none"}
+          });
 
-      var text=svg.append('g')
-        .attr('class', 'labels')
-        .selectAll('text')
-        .data(nodes)
-        .enter()
-        .append("text")
+
+      var text= node.append('text')
+        .attr("dx",1)             
+        .attr("dy", 20)
         .attr('class','label')
-        .text(function(d) { return d.name; });
+        .attr('text-anchor','middle')
+        .text( 
+          function (d) {
+            if (d.type == "user") 
+            {return d.name} else 
+            {return ""}
+          })
 
-      
-
-      svg.selectAll('circle').call(d3.drag()
-          .on('start', dragstarted)
-          .on('drag', dragged)
-          .on('end', dragended)
-        );
+      var icon=node.append('svg:foreignObject')
+          .attr('class', 'icons')
+            .attr("x",-10)             
+            .attr("y", -10)
+            .attr('height', '4px')
+            .attr('width', '4px')
+            .html( function(d) { 
+              if(d.type == "user") {
+                  return '<svg ><image href="../assets/' + d.gender + '.svg" x="0" y="0" height="20px" width="20px"></image></svg>';
+                  // return '<i class="material-icons" style="font-size:1.3rem;cursor: pointer;">person</i>'
+                } else 
+                {
+                  return '<i class="material-icons" style="font-size:1.3rem;cursor: pointer;">list</i>'
+                }
+              })
+          .on('mouseover', (d) => {
+              //console.log("in mouseover;d=",d);
+              div2.transition()
+                 .duration(200)
+                 .style('opacity', .9);
+              div2 .html(
+                function() {
+                    if(d.type=="todo") {
+                        return d.title + "<br/>Completed: " + d.completed
+                      }
+                      else {
+                        //console.log("in mouseover;d=",d);
+                        return d.name + "</br/>" + d.email + "</br/>" + d.company; 
+                      }
+                    }
+                    )
+                 .style('left', (d3.event.pageX) + 'px')
+                 .style('top', (d3.event.pageY - 28) + 'px');
+                })
+          .on('mouseout', (d) => {
+              div2.transition()
+                 .duration(200)
+                 .style('opacity', 0);
+                })
+          .call(d3.drag()
+             .on("start", dragstarted)
+             .on("drag", dragged)
+             .on("end", dragended));
 
       simulation.nodes(nodes).on('tick', ticked);
       //simulation.force("link").links(links);
@@ -138,21 +210,22 @@ import { Globals } from "../globals";
           .attr('x2', function(d: any) { return d.target.x; })
           .attr('y2', function(d: any) { return d.target.y; });
 
-        node
-          .attr('cx', function(d: any) { return d.x; })
-          .attr('cy', function(d: any) { return d.y; });
+        node.attr('transform', function (d) {
+            return 'translate(' + d.x + ', ' + d.y + ')';
+        });
 
-        text
-          .attr('x', function(d: any) { return d.x -4; })
-          .attr('y', function(d: any) { return d.y +15; });
+        //  .attr('y', function(d: any) { return d.y -10; });
 
 		  } // end ticked
 
 
     function dragstarted(d) {
           if (!d3.event.active) { simulation.alphaTarget(0.3).restart(); }
-          d.fx = d.x;
-          d.fy = d.y;
+          //d.fx = d.x;
+          //d.fy = d.y;
+          d.fy=null;
+          d.fx=null;
+          //d3.select(this).classed("fixed", d.fixed = true);
         }
 
     function dragged(d) {
@@ -161,9 +234,11 @@ import { Globals } from "../globals";
     }
 
     function dragended(d) {
+      //console.log("this=",this);
       if (!d3.event.active) { simulation.alphaTarget(0); }
-      d.fx = null;
-      d.fy = null;
+      this.node.fx = null;
+      this.node.fy = null;
+      //node.classed("fixed");
     }
 
     function zoomed() {
@@ -171,5 +246,16 @@ import { Globals } from "../globals";
       };
 
    }  // end nginit
+
+    findGender(name) {
+        name=name.split(" ")[0];
+        for(var i=0;i<this.globals.gender.length;i++) {
+          //console.log("in findgender;i=",i);
+          if(this.globals.gender[i].name == name) {
+            //console.log("found a name match; name=",this.globals.gender[i].name);
+            return this.globals.gender[i].gender;
+          }
+        }
+      }
 } // end  export class UsergraphsComponent
 

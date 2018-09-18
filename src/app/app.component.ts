@@ -5,7 +5,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { DataService } from './data.service';
 import { Routes, Route, Router } from '@angular/router';
 import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
-// import * as d3 from "d3";
 
 @Component({
   selector: 'app-root',

@@ -105,6 +105,10 @@ then add to app.modules:
 or 
 ```npm install @types/d3-array --save```
 
+### D3 tips
+
+```npm install ngx-d3-tooltip```
+
 need typiing? ```npm install --save-dev @types/node```
 
 then add to app modules
