@@ -40,8 +40,9 @@ import { Globals } from "../globals";
 
       let svg = d3.select(this.hostElement)
         .append('svg')
-        .attr('width',width)
-        .attr('height',height)
+        .attr('width',"100%")
+        .attr('height',"100vh")
+        //.attr('style',"margin-bottom:70px;")
         .call(zoom)
         .append('g');
 
@@ -157,11 +158,11 @@ import { Globals } from "../globals";
           .attr('class', 'icons')
             .attr("x",-10)             
             .attr("y", -10)
-            .attr('height', '20px')
-            .attr('width', '20px')
+            .attr('height', '20')
+            .attr('width', '20')
             .html( function(d) { 
               if(d.type == "user") {
-                  return '<svg height="20px;" width="20px;"><image href="../assets/' + d.gender + '.svg" x="0" y="0" height="20px" width="20px"></image></svg>';
+                  return '<svg height="20" width="20"><image href="../assets/' + d.gender + '.svg" x="0" y="0" height="20" width="20"></image></svg>';
                   // return '<i class="material-icons" style="font-size:1.3rem;cursor: pointer;">person</i>'
                 } else 
                 {
@@ -241,9 +242,10 @@ import { Globals } from "../globals";
     function dragended(d) {
       //console.log("this=",this);
       if (!d3.event.active) { simulation.alphaTarget(0); }
-      this.node.fx = null;
-      this.node.fy = null;
-      //node.classed("fixed");
+      if(typeof this.node != "undefined") {
+        this.node.fx = null;
+        this.node.fy = null;
+      }
     }
 
     function zoomed() {
