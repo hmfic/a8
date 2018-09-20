@@ -8,6 +8,7 @@ export class Globals {
   users:any;
   comments:any;
   myinfo:any;
-  gender:any;
+  weatherhash:any;
+  genderhash:any;
   todos:any;
 }

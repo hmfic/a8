@@ -9,7 +9,7 @@ export class DataService {
   constructor(private http: HttpClient) { }
 
   getUsers() {
-    console.log("in getusers");
+    //console.log("in getusers");
   	return this.http.get('https://jsonplaceholder.typicode.com/users')
   }
 
@@ -21,7 +21,8 @@ export class DataService {
   	return this.http.get('https://jsonplaceholder.typicode.com/users/' + userID)
   }
 
-  getTodos(userID) {
+  getTodos() {
+    //console.log("in gettodos");
   	return this.http.get('https://jsonplaceholder.typicode.com/todos')
   }
 
@@ -37,6 +38,10 @@ export class DataService {
     name=name.split(" ")[0];
     //console.log("about to call gendererizer; name=",name);
     return this.http.get('https://api.genderize.io/?name=' + name)
+  }
+
+  getWeather(lon,lat) {
+    return this.http.get('http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&units=imperial&APPID=744c3d107bbf3d1d7046c14dc5e8567d')
   }
 
   getDistance(lat1, lon1, lat2, lon2, unit) {

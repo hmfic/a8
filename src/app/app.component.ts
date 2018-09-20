@@ -26,6 +26,7 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
   @HostBinding('class') componentCssClass;
   cookieValue:string = 'UNKNOWN';
   oldTheme:string = "UNDEFINED";
+  dirty:boolean=false;
   oldName:string;
   //gender:any;
   //lat$:number;
@@ -37,7 +38,7 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
     // look for theme cookie
     this.expiredDate = new Date();
     this.expiredDate.setDate( this.expiredDate.getDate() + 7 );
-    console.log("in app component nginit");
+    // console.log("in app component nginit");
     const cookieExists: boolean = this.cookieService.check('theme');
     var currTheme="dark-theme";
     if (cookieExists) {
@@ -55,7 +56,8 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
     this.globals.title="Application8";
     this.globals.name="Unknown";
     this.globals.users=[];
-    this.globals.gender=[];
+    this.globals.genderhash=[];
+    this.globals.weatherhash=[];
     this.globals.comments=[];
     //this.gender=[];
     this.oldTheme = this.globals.theme;
@@ -79,7 +81,6 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
     };
   //};
      // load up users into global array
-    // ***************** ORIGINAL **********************
      this.data.getUsers().subscribe(data => {
       this.globals.users = data;
       for (var i =0;i< this.globals.users.length;i++) {
@@ -94,27 +95,44 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
           this.result=this.data.getDistance(this.globals.users[i].address.geo.lat,this.globals.users[i].address.geo.lng,this.globals.myinfo.lat,this.globals.myinfo.lon,"K");
           this.globals.users[i].dist = this.result;
         }
+
         this.data.getGender(this.globals.users[i].name).subscribe (gdata => {
-            //console.log("after getgender;gdata=",gdata.gender);
-            //if(typeof this.globals.users[i] === "undefined") {
-            //  console.log("global users undefined");
-            //}
-            //this.globals.users[i].gender=gdata.gender;
-            //console.log("pushing gender");
-            this.globals.gender.push(gdata);
-            //console.log("just set gender array i;data=",i,":",this.globals.gender);
+            this.globals.genderhash[gdata["name"]]= gdata["gender"];
           })
 
-        //console.log("done screwing with global user array; users=",this.globals.users);
         } // end for loop
       },error => {console.log("getusers error");
     }); // end subscribe 
 
     this.data.getComments().subscribe(data => {this.globals.comments = data},error => {console.log("getcomments error");}
       );
+    this.data.getTodos().subscribe(data => {
+      //this.todos = data;
+      this.globals.todos=data;
+      });
   }
 
    ngDoCheck() {
+      if (typeof this.globals.users != "undefined") {
+       if (this.globals.users.length > 0) {
+         // console.log("users defined;len=",this.globals.users.length);
+         // console.log("this.globals.users[0].name=",this.globals.users[0].name);
+         if (this.dirty == false) {
+            this.dirty=true;
+            for (var i=0;i<this.globals.users.length;i++) {
+               // console.log("weatherhash 0;len=",this.globals.weatherhash.length);
+               if(typeof this.globals.users[i].name != "undefined") {
+                   // console.log("OK, the users array is more than 0, exists and the .name attribute is defined");
+                   this.data.getWeather(this.globals.users[i]["address"]["geo"]["lng"],this.globals.users[i].address.geo.lat).subscribe (wdata => {
+                      this.globals.weatherhash.push(wdata);
+                      //console.log("weatherhash pushed",this.globals.weatherhash);
+                    })
+                // end if 
+              }
+           }
+         }
+       }
+     }
      if (this.oldTheme != this.globals.theme) {
         console.log("in ngdocheck; global new theme=",this.globals.theme);
         const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;

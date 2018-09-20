@@ -21,11 +21,6 @@ export class TodosComponent implements OnInit {
   selectedID:number;
 
   ngOnInit() {
-  	this.data.getTodos(this.user).subscribe(data => {
-      this.todos = data;
-      this.globals.todos=this.todos;}
-      );
-    
   	this.persons=[
   		{"name":"Any","id":0},
   		{"name":"Leanne Graham","id":1},

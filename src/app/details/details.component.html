@@ -18,7 +18,7 @@
 	</mat-grid-tile>
 	<mat-grid-tile colspan='7'>
 		<mat-card>
-			<mat-card-title>{{globals.users[user$].name}} is {{globals.users[user$].dist}} kilometers from you</mat-card-title>
+			<mat-card-title>{{globals.users[user$].name}} is {{globals.users[user$].dist|number}} kilometers from you</mat-card-title>
 			<mat-card-content>
 				<agm-map #gm [latitude]="+globals.users[user$]?.address.geo.lat" [longitude]="+globals.users[user$]?.address.geo.lng" [zoom]="2">
 				  <agm-marker (mouseOver)="onMouseOver(infoWindow1,gm)" [latitude]="+globals.users[user$]?.address.geo.lat" [longitude]="+globals.users[user$]?.address.geo.lng">

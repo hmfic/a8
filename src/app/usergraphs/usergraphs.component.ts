@@ -25,6 +25,8 @@ import { Globals } from "../globals";
       //console.log("element host height=",this.hostElement.offsetHeight);
       //console.log("element host =",this.hostElement);
 
+      
+
       let width=this.hostElement.offsetWidth -30;
       let height=this.hostElement.offsetHeight -30;
 
@@ -82,7 +84,6 @@ import { Globals } from "../globals";
         nodes.push({"id":this.globals.users[i].id+holdem,"userid":this.globals.users[i].id, "name":this.globals.users[i].name, "type":"user", "email":this.globals.users[i].email,"company":this.globals.users[i].company.name,"gender":this.findGender(this.globals.users[i].name)});
         } 
       // OK, all the nodes have been pushed with hopefully unique IDs, match them up now
-
       for(var i=0;i<this.globals.todos.length;i++) {
         for (var j=0;j< nodes.length;j++) {
             // console.log("looking to test this.globals.todos[i].userId and nodes[j].name", this.globals.todos[i].userId,":",nodes[j].id)
@@ -115,15 +116,14 @@ import { Globals } from "../globals";
         .attr("opacity",.5)
         .attr('stroke-width', "1px");
 
-
       var nodex = svg.append('g')
             .attr('class', 'nodes');
 
       var node = nodex.selectAll("g")
-            .data(nodes)
-            .enter()
-            .append("g")
-            .attr('class', 'node');
+        .data(nodes)
+        .enter()
+        .append("g")
+        .attr('class', 'node');
 
       //node.append('circle')
       var circle = node.append("circle")
@@ -141,7 +141,6 @@ import { Globals } from "../globals";
           if(d.type=="user") { return "url(#drop-shadow)"} else {return "none"}
           });
 
-
       var text= node.append('text')
         .attr("dx",1)             
         .attr("dy", 20)
@@ -158,19 +157,29 @@ import { Globals } from "../globals";
           .attr('class', 'icons')
             .attr("x",-10)             
             .attr("y", -10)
-            .attr('height', '4px')
-            .attr('width', '4px')
+            .attr('height', '20px')
+            .attr('width', '20px')
             .html( function(d) { 
               if(d.type == "user") {
-                  return '<svg ><image href="../assets/' + d.gender + '.svg" x="0" y="0" height="20px" width="20px"></image></svg>';
+                  return '<svg height="20px;" width="20px;"><image href="../assets/' + d.gender + '.svg" x="0" y="0" height="20px" width="20px"></image></svg>';
                   // return '<i class="material-icons" style="font-size:1.3rem;cursor: pointer;">person</i>'
                 } else 
                 {
                   return '<i class="material-icons" style="font-size:1.3rem;cursor: pointer;">list</i>'
                 }
-              })
-          .on('mouseover', (d) => {
-              //console.log("in mouseover;d=",d);
+              }); 
+
+      var transcircle = node.append("circle")
+        .attr("cx",0)
+        .attr("cy", 0)
+        .attr('r', 15)
+        .attr('fill',"transparent")
+        .call(d3.drag()
+             .on("start", dragstarted)
+             .on("drag", dragged)
+             .on("end", dragended))
+        .on('mouseover', (d) => {
+              //console.log("in transcircle mouseover;d=",d);
               div2.transition()
                  .duration(200)
                  .style('opacity', .9);
@@ -192,11 +201,7 @@ import { Globals } from "../globals";
               div2.transition()
                  .duration(200)
                  .style('opacity', 0);
-                })
-          .call(d3.drag()
-             .on("start", dragstarted)
-             .on("drag", dragged)
-             .on("end", dragended));
+                });
 
       simulation.nodes(nodes).on('tick', ticked);
       //simulation.force("link").links(links);
@@ -249,13 +254,7 @@ import { Globals } from "../globals";
 
     findGender(name) {
         name=name.split(" ")[0];
-        for(var i=0;i<this.globals.gender.length;i++) {
-          //console.log("in findgender;i=",i);
-          if(this.globals.gender[i].name == name) {
-            //console.log("found a name match; name=",this.globals.gender[i].name);
-            return this.globals.gender[i].gender;
-          }
-        }
+        return this.globals.genderhash[name];
       }
 } // end  export class UsergraphsComponent
 

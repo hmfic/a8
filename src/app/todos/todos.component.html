@@ -24,11 +24,9 @@
 		</mat-grid-tile>
 </mat-grid-list>
 
-	
-
 <div>
 	<mat-grid-list cols="3" rowHeight="2.5:1">
-		<span *ngFor="let todo of todos">
+		<span *ngFor="let todo of globals.todos">
 			<!-- <mat-grid-tile *ngIf="(showCompleted || !todo.completed)" >-->
 			<!-- <mat-grid-tile *ngIf="(showCompleted || !todo.completed) && (getUser(todo.userId).id==selectedID || selectedID==0)" >  -->
 			<mat-grid-tile *ngIf="(todoMode=='All' || (todoMode == 'Completed' && todo.completed == true) || (todoMode == 'Open' && todo.completed == false)) && (getUser(todo.userId).id==selectedID || selectedID==0) " >

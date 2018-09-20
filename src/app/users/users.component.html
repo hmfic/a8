@@ -1,21 +1,28 @@
 <h1 style="display: flex;align-items: center;"><i class="material-icons blue" style="font-size: 2.5rem !important">people</i> &nbsp; Users </h1> 
-<mat-grid-list cols="3" rowHeight="2.5:1">
+<mat-grid-list cols="3" rowHeight="2.1:1">
 	<div *ngFor="let user of globals.users">
 		<mat-grid-tile>
 			<mat-card style="width:80%;">
 				<mat-card-title style="display: flex;align-items: center;">
-					<!-- <i class="material-icons blue" style="font-size: 2.5rem !important"> -->
 					<mat-icon class="blue" svgIcon="{{findGender(user.name)}}"></mat-icon> &nbsp;{{user.name}}
-					<!-- </i> &nbsp; {{user.name}} -->
 				</mat-card-title>
 				<mat-card-content>
 					<div class="row">Email: {{user.email}}</div>
 					<div class="row">Website: {{user.website}}</div>
 					<div class="row">Company: {{user.company.name}}</div>
-					<a routerLink="details/{{user.id-1}}" style="display: flex;align-items: center;">
+					<div class="row" style="display: flex;align-items: center;">
+						<img style="margin-right:10px;" *ngIf="findWeather(user.address.geo.lng,user.address.geo.lat).icon != 'na'" src="http://openweathermap.org/img/w/{{findWeather(user.address.geo.lng,user.address.geo.lat).icon}}.png"/>
+						{{findWeather(user.address.geo.lng,user.address.geo.lat).temp}}&deg;F
+						with {{findWeather(user.address.geo.lng,user.address.geo.lat).skys}}
+						
+						
+					</div>
+				</mat-card-content>
+				<mat-card-footer style="margin:0px;">
+					<a routerLink="details/{{user.id-1}}">
 						<i class="material-icons blue" style="font-size: 1.2rem !important">info</i> &nbsp;... more info
 					</a>
-				</mat-card-content>
+				</mat-card-footer>
 			</mat-card>
 		</mat-grid-tile>
 	</div>
