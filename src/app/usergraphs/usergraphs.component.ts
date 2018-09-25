@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
 import * as d3 from 'd3';
 import { Globals } from "../globals";
 
@@ -9,23 +9,29 @@ import { Globals } from "../globals";
   encapsulation: ViewEncapsulation.None
 })
 
-  export class UsergraphsComponent implements OnInit {
-    @ViewChild('forceDirectedChartContainer')
-    private chartContainer: ElementRef;
+  export class UsergraphsComponent implements OnInit, AfterViewInit {
+    @ViewChild('forceDirectedChartContainer') chartContainer: ElementRef;
     hostElement: any;
+    width:number;
+    height:number;
 
   constructor(
         private globals: Globals,
         private elementRef:ElementRef,
         ) {  }
 
+    ngAfterViewInit() {
+      console.log("after view element host height=",this.chartContainer.nativeElement.offsetHeight);
+      this.width=this.chartContainer.nativeElement.offsetWidth;
+      this.height=this.chartContainer.nativeElement.offsetHeight
+    }
+
     ngOnInit() {
       this.hostElement = this.chartContainer.nativeElement;
-      //console.log("element host width=",this.hostElement.offsetWidth);
-      //console.log("element host height=",this.hostElement.offsetHeight);
+      console.log("element host height=",this.chartContainer.nativeElement.offsetHeight);
+      console.log("element host width=",this.hostElement.offsetWidth);
       //console.log("element host =",this.hostElement);
 
-      
 
       let width=this.hostElement.offsetWidth -30;
       let height=this.hostElement.offsetHeight -30;

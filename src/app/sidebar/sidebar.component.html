@@ -26,7 +26,14 @@
 	 	 <mat-list-item  routerLinkActive="{{getBackground(globals.theme)}}"> 
 		 	<a routerLink="usergraphs" class="sidenav-links" routerLinkActive="{{getBackground(globals.theme)}}">
 		 		<div (click)="sidebar.close()" style="display: flex;align-items: center;">
-					<i class="material-icons">bar_chart</i>&nbsp; User graphs
+					<i class="material-icons">bubble_chart</i>&nbsp; Todo connections
+				</div>
+			</a>
+	 	 </mat-list-item>
+	 	 <mat-list-item  routerLinkActive="{{getBackground(globals.theme)}}"> 
+		 	<a routerLink="sankey1" class="sidenav-links" routerLinkActive="{{getBackground(globals.theme)}}">
+		 		<div (click)="sidebar.close()" style="display: flex;align-items: center;">
+					<i class="material-icons">multiline_chart</i>&nbsp; Todo Flows
 				</div>
 			</a>
 	 	 </mat-list-item>
@@ -37,34 +44,3 @@
       	<router-outlet></router-outlet>
   </mat-sidenav-container>
 </mat-sidenav-container> 
-
-	
-	<!--
-	<div>
-  		<a routerLink="" class="sidenav-links">
-			<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/'" [class.mat-flat-button]="this.router.url != '/'" style="width:100%;">
-				<i class="material-icons">supervised_user_circle</i> Users
-			</button>
-		</a>
-	</div>
-	<div>
-		<a routerLink="posts" class="sidenav-links" >
-	 		<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/posts'" [class.mat-flat-button]="this.router.url != '/posts'" style="width:100%;">
-				<i class="material-icons">message</i> Posts
-			</button>
-		</a>
-	</div>
-	<div>
-		<a routerLink="todos" class="sidenav-links" >
-	 		<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/todos'" [class.mat-flat-button]="this.router.url != '/todos'" style="width:100%;">
-				<i class="material-icons">list</i> To-Dos
-			</button>
-		</a>
-	</div>
-	<div>
-		<a routerLink="usergraphs" class="sidenav-links" >
-	 		<button (click)="sidebar.close()" mat-button [class.mat-raised-button]="this.router.url == '/usergraphs'" [class.mat-flat-button]="this.router.url != '/usergraphs'" style="width:100%;">
-				<i class="material-icons">bar_chart</i> User graphs
-			</button>
-		</a>
-	</div>-->

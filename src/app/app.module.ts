@@ -31,6 +31,7 @@ import { select, selectAll } from "d3-selection";
 import { HelpmodalComponent } from './helpmodal/helpmodal.component';
 
 import { MatIconModule } from "@angular/material/icon";
+import { Sankey1Component } from './sankey1/sankey1.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { MatIconModule } from "@angular/material/icon";
     UsersComponent,
     TodosComponent,
     UsergraphsComponent,
-    HelpmodalComponent
+    HelpmodalComponent,
+    Sankey1Component
   ],
   imports: [
     BrowserModule,

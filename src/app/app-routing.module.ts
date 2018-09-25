@@ -6,6 +6,7 @@ import { DetailsComponent } from './details/details.component';
 import { PostsComponent } from './posts/posts.component';
 import { TodosComponent } from './todos/todos.component';
 import { UsergraphsComponent } from './usergraphs/usergraphs.component';
+import { Sankey1Component } from './sankey1/sankey1.component';
 
 const routes: Routes = [
 	{
@@ -35,6 +36,10 @@ const routes: Routes = [
 	{
 		path:'usergraphs',
 		component: UsergraphsComponent
+	},
+	{
+		path:'sankey1',
+		component: Sankey1Component
 	}
 ];
 

@@ -114,3 +114,7 @@ need typiing? ```npm install --save-dev @types/node```
 then add to app modules
 
 don't forget encapsulation in d3 modules to avoid rewriting the styles
+
+### D3 Sankey
+```npm install --save d3-sankey```
+```npm install --save @types/d3-sankey```
