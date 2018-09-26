@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterViewInit, ViewEncapsulation, ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewEncapsulation, ViewChild, ElementRef, Output, EventEmitter} from '@angular/core';
 import * as d3 from 'd3';
 import { Globals } from "../globals";
+// import { Event } from '../classes/event';
 
 @Component({
   selector: 'app-usergraphs',
@@ -14,6 +15,8 @@ import { Globals } from "../globals";
     hostElement: any;
     width:number;
     height:number;
+    // this is the emitter for sending to sankey1
+      @Output() eventHover = new EventEmitter<Event>();
 
   constructor(
         private globals: Globals,
@@ -27,6 +30,8 @@ import { Globals } from "../globals";
     }
 
     ngOnInit() {
+      
+
       this.hostElement = this.chartContainer.nativeElement;
       //console.log("element host =",this.hostElement);
 
@@ -197,6 +202,9 @@ import { Globals } from "../globals";
              .on("drag", dragged)
              .on("end", dragended))
         .on('mouseover', (d) => {
+          // send info to emitter
+          this.eventHover.emit(d);
+          // end emitter section
               //console.log("in transcircle mouseover;d=",d);
               div2.transition()
                  .duration(200)

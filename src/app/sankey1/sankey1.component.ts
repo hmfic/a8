@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, ViewEncapsulation, ViewChild, Element
 import * as d3 from 'd3';
 import * as d3Sankey from 'd3-sankey';
 import { Globals } from "../globals";
+// import { Event } from './classes/event';
 
 @Component({
   selector: 'app-sankey1',
@@ -15,6 +16,8 @@ export class Sankey1Component implements OnInit, AfterViewInit {
     hostElement: any;
     width:number;
     height:number;
+
+    // @Input() event: Event;
 
   constructor(
   	private globals: Globals,
@@ -66,7 +69,7 @@ export class Sankey1Component implements OnInit, AfterViewInit {
         .attr("opacity", ".1")
         .attr('font-size', "2em" )
         .text(function(d){
-            return 'Single User Todos'}); 
+            return 'Single User Todos' + event}); 
 
     // var sankey = d3.sankey()
     var sankey = d3Sankey.sankey()
@@ -148,7 +151,7 @@ export class Sankey1Component implements OnInit, AfterViewInit {
         .attr("height", function (d: any) { return d.y1 - d.y0; })
         .attr("width", function (d: any) { return d.x1 - d.x0; })
         .attr("fill", function (d: any) { 
-            console.log("d=",d);
+            //console.log("d=",d);
             if(d.completed == true) {
                 return "green"
             } else 
