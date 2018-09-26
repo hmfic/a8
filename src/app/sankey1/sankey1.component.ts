@@ -23,9 +23,9 @@ export class Sankey1Component implements OnInit, AfterViewInit {
     ) { }
 
   ngAfterViewInit() {
-      console.log("after view element host height=",this.chartContainer.nativeElement.offsetHeight);
-      this.width=this.chartContainer.nativeElement.offsetWidth-40;
-      this.height=this.chartContainer.nativeElement.offsetHeight-40;
+      console.log("sankey1; after view element host height=",this.chartContainer.nativeElement.offsetHeight);
+      this.width=this.chartContainer.nativeElement.offsetWidth;
+      this.height=this.chartContainer.nativeElement.offsetHeight;
       this.DrawChart();
     }
 
@@ -35,30 +35,45 @@ export class Sankey1Component implements OnInit, AfterViewInit {
   }
 // his.chartContainer.nativeElement.offsetWidth
   private DrawChart() {
-  	//let width=this.chartContainer.nativeElement.offsetWidth -30;
-    //let height=this.chartContainer.nativeElement.offsetHeight -30;
+  	this.width=this.chartContainer.nativeElement.offsetWidth -50;
+    //this.height=this.chartContainer.nativeElement.offsetHeight -30;
+    if (this.chartContainer.nativeElement.offsetHeight <= 1 ) {
+        this.height=500;
+    } else this.height=this.chartContainer.nativeElement.offsetHeight -50;
 
     var formatNumber = d3.format(",.0f"),
     color = d3.scaleOrdinal(d3.schemeCategory10);
 
-    console.log("width:height",this.width,":",this.height);
-
-    //width=700;
-    //height=500;
-
+    console.log("in drawchart; sankey1; width:height",this.width,":",this.height);
 
     let svg = d3.select(this.hostElement)
         .append('svg')
         .attr('width',"100%")
-        .attr('height',"100%")
+        //.attr('height',"100vh")
+        //.attr('width',this.width)
+        .attr('height',this.height)
         //.attr('style',"margin-bottom:70px;")
         .append('g');
+
+    svg.append("g")
+        .append("text")
+        .attr("id","loading")
+        .attr("x", this.width*.5)
+        .attr("y", 30)
+        .attr("stroke", "black")
+        .attr("stroke-width", 0)
+        .attr('text-anchor','middle')
+        .attr("opacity", ".1")
+        .attr('font-size', "2em" )
+        .text(function(d){
+            return 'Single User Todos'}); 
 
     // var sankey = d3.sankey()
     var sankey = d3Sankey.sankey()
         .nodeWidth(15)
         .nodePadding(10)
-        .extent([[1, 1], [this.width - 100, this.height - 20]]);
+        .extent([[1, 40], [this.width - 100, this.height - 20]]);
+        //.extent([[1, 1], [this.width - 100, this.height - 20]]);
 
     var link = svg.append("g")
         .attr("class", "links")
@@ -73,27 +88,28 @@ export class Sankey1Component implements OnInit, AfterViewInit {
         .attr("font-size", 10)
         .selectAll("g");
 
-    var div = d3.select("body").append("div")   
-        .attr("class", "tooltipsankey")               
+    var div = d3.select("body").append("div")
+        .attr("class", "tooltipsankey") 
         .style("opacity", 0);
 
-     const energy:DAG = {
+    const energy:DAG = {
             nodes: [{
                 nodeId: 0,
-                name: this.globals.users[0].name
+                name: this.globals.users[0].name,
+                completed: true
             }],
             links: []
         };
         
     for(var i=0;i<this.globals.todos.length;i++) {
     	if(this.globals.todos[i].userId==1) {
-    		energy.nodes.push({nodeId:i+1,"name":this.globals.todos[i].title})
+    		energy.nodes.push({nodeId:i+1,"name":this.globals.todos[i].title,"completed":this.globals.todos[i].completed})
     	}
     }
     for(var i=0;i<energy.nodes.length-1;i++) {
-    	energy.links.push({"source":0,"target":i+1,"value":energy.nodes[i+1].name.length,"uom":"char"})
+    	energy.links.push({"source":0,"target":i+1,"value":energy.nodes[i+1].name.length})
     }
-    console.log("energy=",energy);
+    // console.log("energy=",energy);
     sankey(energy);
 
     link = link
@@ -131,7 +147,12 @@ export class Sankey1Component implements OnInit, AfterViewInit {
         .attr("y", function (d: any) { return d.y0; })
         .attr("height", function (d: any) { return d.y1 - d.y0; })
         .attr("width", function (d: any) { return d.x1 - d.x0; })
-        .attr("fill", function (d: any) { return color(d.name.replace(/ .*/, "")); })
+        .attr("fill", function (d: any) { 
+            console.log("d=",d);
+            if(d.completed == true) {
+                return "green"
+            } else 
+            {return  "orange"}})
         .attr("stroke", "#000");
 
     node.append("text")
@@ -157,13 +178,13 @@ export class Sankey1Component implements OnInit, AfterViewInit {
 interface SNodeExtra {
     nodeId: number;
     name: string;
+    completed: boolean;
 }
 
 interface SLinkExtra {
     source: number;
     target: number;
     value: number;
-    uom: string;
 }
 type SNode = d3Sankey.SankeyNode<SNodeExtra, SLinkExtra>;
 type SLink = d3Sankey.SankeyLink<SNodeExtra, SLinkExtra>;

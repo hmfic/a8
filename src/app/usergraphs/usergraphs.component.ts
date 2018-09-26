@@ -21,20 +21,18 @@ import { Globals } from "../globals";
         ) {  }
 
     ngAfterViewInit() {
-      console.log("after view element host height=",this.chartContainer.nativeElement.offsetHeight);
-      this.width=this.chartContainer.nativeElement.offsetWidth;
-      this.height=this.chartContainer.nativeElement.offsetHeight
+      console.log("usergraphs; after view element host height=",this.chartContainer.nativeElement.offsetHeight);
+      this.width=this.chartContainer.nativeElement.offsetWidth -50;
+      this.height=this.chartContainer.nativeElement.offsetHeight -50;
     }
 
     ngOnInit() {
       this.hostElement = this.chartContainer.nativeElement;
-      console.log("element host height=",this.chartContainer.nativeElement.offsetHeight);
-      console.log("element host width=",this.hostElement.offsetWidth);
       //console.log("element host =",this.hostElement);
 
-
-      let width=this.hostElement.offsetWidth -30;
-      let height=this.hostElement.offsetHeight -30;
+      this.width=this.hostElement.offsetWidth -30;
+      this.height=this.hostElement.offsetHeight -30;
+      console.log("in nginit; usergraphs; width:height",this.width,":",this.height);
 
       var zoom = d3.zoom()
          .scaleExtent([.2,10])
@@ -51,6 +49,19 @@ import { Globals } from "../globals";
         //.attr('style',"margin-bottom:70px;")
         .call(zoom)
         .append('g');
+
+      svg.append("g")
+        .append("text")
+        .attr("id","loading")
+        .attr("x", this.width*.5)
+        .attr("y", 30)
+        .attr("stroke", "black")
+        .attr("stroke-width", 0)
+        .attr('text-anchor','middle')
+        .attr("opacity", ".1")
+        .attr('font-size', "2em" )
+        .text(function(d){
+            return 'All User Todos'}); 
 
       var defs = svg.append("defs");
       var filter = defs.append("filter")
@@ -110,7 +121,7 @@ import { Globals } from "../globals";
       var simulation = d3.forceSimulation()
         .force("link", d3.forceLink().id(function(d:any) {return d.id; }))
         .force('charge', d3.forceManyBody().strength(-20))
-        .force('center', d3.forceCenter(width / 2, height / 2))
+        .force('center', d3.forceCenter(this.width / 2, this.height / 2))
         .force('collision', d3.forceCollide().radius(25));
 
       var link = svg.append('g')

@@ -32,6 +32,7 @@ import { HelpmodalComponent } from './helpmodal/helpmodal.component';
 
 import { MatIconModule } from "@angular/material/icon";
 import { Sankey1Component } from './sankey1/sankey1.component';
+import { GraphcentralComponent } from './graphcentral/graphcentral.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { Sankey1Component } from './sankey1/sankey1.component';
     TodosComponent,
     UsergraphsComponent,
     HelpmodalComponent,
-    Sankey1Component
+    Sankey1Component,
+    GraphcentralComponent
   ],
   imports: [
     BrowserModule,
