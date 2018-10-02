@@ -4,13 +4,13 @@ import { Globals } from "../globals";
 // import { Event } from '../classes/event';
 
 @Component({
-  selector: 'app-usergraphs',
-  templateUrl: './usergraphs.component.html',
-  styleUrls: ['./usergraphs.component.scss'],
+  selector: 'app-force',
+  templateUrl: './force.component.html',
+  styleUrls: ['./force.component.scss'],
   encapsulation: ViewEncapsulation.None
 })
 
-  export class UsergraphsComponent implements OnInit, AfterViewInit {
+  export class ForceComponent implements OnInit, AfterViewInit {
     @ViewChild('forceDirectedChartContainer') chartContainer: ElementRef;
     hostElement: any;
     width:number;
@@ -24,7 +24,7 @@ import { Globals } from "../globals";
         ) {  }
 
     ngAfterViewInit() {
-      console.log("usergraphs; after view element host height=",this.chartContainer.nativeElement.offsetHeight);
+      console.log("force; after view element host height=",this.chartContainer.nativeElement.offsetHeight);
       this.width=this.chartContainer.nativeElement.offsetWidth -50;
       this.height=this.chartContainer.nativeElement.offsetHeight -50;
     }
@@ -37,7 +37,7 @@ import { Globals } from "../globals";
 
       this.width=this.hostElement.offsetWidth -30;
       this.height=this.hostElement.offsetHeight -30;
-      console.log("in nginit; usergraphs; width:height",this.width,":",this.height);
+      console.log("in nginit; force; width:height",this.width,":",this.height);
 
       var zoom = d3.zoom()
          .scaleExtent([.2,10])
@@ -57,7 +57,6 @@ import { Globals } from "../globals";
 
       svg.append("g")
         .append("text")
-        .attr("id","loading")
         .attr("x", this.width*.5)
         .attr("y", 30)
         .attr("stroke", "black")
@@ -65,6 +64,7 @@ import { Globals } from "../globals";
         .attr('text-anchor','middle')
         .attr("opacity", ".1")
         .attr('font-size', "2em" )
+        //.style("position","absolute")
         .text(function(d){
             return 'All User Todos'}); 
 
@@ -283,5 +283,5 @@ import { Globals } from "../globals";
         name=name.split(" ")[0];
         return this.globals.genderhash[name];
       }
-} // end  export class UsergraphsComponent
+} // end  export class ForceComponent
 

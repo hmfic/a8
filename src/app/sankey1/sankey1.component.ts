@@ -11,12 +11,16 @@ import { Globals } from "../globals";
   encapsulation: ViewEncapsulation.None
 
 })
+
 export class Sankey1Component implements OnInit, AfterViewInit {
 	@ViewChild('sankey1ChartContainer') chartContainer: ElementRef;
     hostElement: any;
     width:number;
     height:number;
-
+    //hoverName:string;
+    graph: any;
+    //@Input() data:any;
+    margin:any = {top: 0, right: 20, bottom: 20, left: 20}
     // @Input() event: Event;
 
   constructor(
@@ -26,11 +30,20 @@ export class Sankey1Component implements OnInit, AfterViewInit {
     ) { }
 
   ngAfterViewInit() {
-      console.log("sankey1; after view element host height=",this.chartContainer.nativeElement.offsetHeight);
+      //console.log("sankey1; after view element host height=",this.chartContainer.nativeElement.offsetHeight);
+      //console.log("sankey1; data=",this.data);
       this.width=this.chartContainer.nativeElement.offsetWidth;
-      this.height=this.chartContainer.nativeElement.offsetHeight;
+      this.height=this.chartContainer.nativeElement.offsetHeight - this.margin.bottom;
+      //this.data="";
       this.DrawChart();
     }
+
+  //ngOnChanges(changes: SimpleChanges) {
+  //    if (typeof this.data==="undefined") return;
+  //    console.log("in sankey1; ngonchanges;data=",this.data);
+  //    this.hoverName=this.data.title;
+    // changes.prop contains the old and the new value...
+  //}
 
   ngOnInit () {
   	this.hostElement = this.chartContainer.nativeElement;
@@ -47,7 +60,8 @@ export class Sankey1Component implements OnInit, AfterViewInit {
     var formatNumber = d3.format(",.0f"),
     color = d3.scaleOrdinal(d3.schemeCategory10);
 
-    console.log("in drawchart; sankey1; width:height",this.width,":",this.height);
+    //console.log("in drawchart; sankey1; width:height",this.width,":",this.height);
+    //console.log("in drawchart; sankey1; this.data=",this.data);
 
     let svg = d3.select(this.hostElement)
         .append('svg')
@@ -56,11 +70,13 @@ export class Sankey1Component implements OnInit, AfterViewInit {
         //.attr('width',this.width)
         .attr('height',this.height)
         //.attr('style',"margin-bottom:70px;")
-        .append('g');
+        .append('g')
+
+        .attr("transform", 
+          "translate(" + this.margin.left + "," + this.margin.top + ")");;
 
     svg.append("g")
         .append("text")
-        .attr("id","loading")
         .attr("x", this.width*.5)
         .attr("y", 30)
         .attr("stroke", "black")
@@ -68,14 +84,15 @@ export class Sankey1Component implements OnInit, AfterViewInit {
         .attr('text-anchor','middle')
         .attr("opacity", ".1")
         .attr('font-size', "2em" )
+        //.style("position","absolute")
         .text(function(d){
-            return 'Single User Todos' + event}); 
+            return 'Single User Todos '}); 
 
     // var sankey = d3.sankey()
     var sankey = d3Sankey.sankey()
         .nodeWidth(15)
-        .nodePadding(10)
-        .extent([[1, 40], [this.width - 100, this.height - 20]]);
+        .nodePadding(5)
+        .extent([[10, 40], [this.width - 100, this.height - 25]]);
         //.extent([[1, 1], [this.width - 100, this.height - 20]]);
 
     var link = svg.append("g")
@@ -113,7 +130,7 @@ export class Sankey1Component implements OnInit, AfterViewInit {
     	energy.links.push({"source":0,"target":i+1,"value":energy.nodes[i+1].name.length})
     }
     // console.log("energy=",energy);
-    sankey(energy);
+    var graph = sankey(energy);
 
     link = link
         .data(energy.links)
@@ -121,6 +138,16 @@ export class Sankey1Component implements OnInit, AfterViewInit {
         .append("path")
         .attr("class", "linksankey")
         .attr("d", d3Sankey.sankeyLinkHorizontal())
+        /* .style("stroke",
+            function (d:any) {
+                console.log("in stroke link;test=x:y",d.target.name,":",this.hoverName);
+                
+                if(d.target.name == this.hoverName) {
+                        return "red"
+                    } else {
+                        return "blue"
+                    }
+            }) */
         .attr("stroke-width", function (d: any) { return Math.max(1, d.width); })
 
     link.on("mouseover", function(d) {    
@@ -143,20 +170,28 @@ export class Sankey1Component implements OnInit, AfterViewInit {
 
     node = node
         .data(energy.nodes)
-        .enter().append("g");
+        .enter().append("g")
+
+        .call(d3.drag()
+            .subject(function(d){return d})
+            .on('start', function () { this.parentNode.appendChild(this); })
+            .on('drag', dragmove));
+
 
     node.append("rect")
         .attr("x", function (d: any) { return d.x0; })
         .attr("y", function (d: any) { return d.y0; })
+        .attr("stroke-width","0")
         .attr("height", function (d: any) { return d.y1 - d.y0; })
         .attr("width", function (d: any) { return d.x1 - d.x0; })
         .attr("fill", function (d: any) { 
-            //console.log("d=",d);
+            //console.log("rect hover; data=",this.data);
+
             if(d.completed == true) {
                 return "green"
             } else 
             {return  "orange"}})
-        .attr("stroke", "#000");
+        .attr("stroke", "#888");
 
     node.append("text")
         .attr("x", function (d: any) { return d.x0 +15; })
@@ -172,11 +207,25 @@ export class Sankey1Component implements OnInit, AfterViewInit {
         .attr("x", function (d: any) { return d.x1 + 3; })
         .attr("text-anchor", "start");
 
-    node.append("title")
-        .text(function (d: any) { return d.name; });
+    function dragmove(d) {
+          var rectY = d3.select(this).select("rect").attr("y");
+          d.y0 = d.y0 + d3.event.dy;
+          var yTranslate = d.y0 - rectY;
+
+          var rectX = d3.select(this).select("rect").attr("x");
+          d.x0 = d.x0 + d3.event.dx;
+          var xTranslate = d.x0 - rectX;
+          d3.select(this).attr("transform","translate("+ [xTranslate,yTranslate] + ")"); 
+          //console.log("graph=",graph); 
+          sankey.update(graph);
+          link.attr("d",d3Sankey.sankeyLinkHorizontal());
+        }
+
 
   }
 }
+
+
 
 interface SNodeExtra {
     nodeId: number;

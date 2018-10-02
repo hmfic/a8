@@ -25,7 +25,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { TodosComponent } from './todos/todos.component';
 import { SidebarService } from './sidebar/sidebar.service';
 import { AgmCoreModule } from '@agm/core';
-import { UsergraphsComponent } from './usergraphs/usergraphs.component';
+import { ForceComponent } from './force/force.component';
 
 import { select, selectAll } from "d3-selection";
 import { HelpmodalComponent } from './helpmodal/helpmodal.component';
@@ -44,7 +44,7 @@ import { GraphcentralComponent } from './graphcentral/graphcentral.component';
     SidebarComponent,
     UsersComponent,
     TodosComponent,
-    UsergraphsComponent,
+    ForceComponent,
     HelpmodalComponent,
     Sankey1Component,
     GraphcentralComponent

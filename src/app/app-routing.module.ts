@@ -5,7 +5,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { DetailsComponent } from './details/details.component';
 import { PostsComponent } from './posts/posts.component';
 import { TodosComponent } from './todos/todos.component';
-import { UsergraphsComponent } from './usergraphs/usergraphs.component';
+import { ForceComponent } from './force/force.component';
 import { Sankey1Component } from './sankey1/sankey1.component';
 import { GraphcentralComponent } from './graphcentral/graphcentral.component';
 
@@ -35,8 +35,8 @@ const routes: Routes = [
 		component: TodosComponent
 	},
 	{
-		path:'usergraphs',
-		component: UsergraphsComponent
+		path:'force',
+		component: ForceComponent
 	},
 	{
 		path:'graphcentral',
