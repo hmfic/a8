@@ -54,7 +54,7 @@ export class Sankey1Component implements OnInit, AfterViewInit {
   	this.width=this.chartContainer.nativeElement.offsetWidth -50;
     //this.height=this.chartContainer.nativeElement.offsetHeight -30;
     if (this.chartContainer.nativeElement.offsetHeight <= 1 ) {
-        this.height=500;
+        this.height=700;
     } else this.height=this.chartContainer.nativeElement.offsetHeight -50;
 
     var formatNumber = d3.format(",.0f"),
@@ -129,6 +129,7 @@ export class Sankey1Component implements OnInit, AfterViewInit {
     for(var i=0;i<energy.nodes.length-1;i++) {
     	energy.links.push({"source":0,"target":i+1,"value":energy.nodes[i+1].name.length})
     }
+    energy.links[1]['value'] = energy.links[1]['value'] + 100;
     // console.log("energy=",energy);
     var graph = sankey(energy);
 
@@ -169,14 +170,43 @@ export class Sankey1Component implements OnInit, AfterViewInit {
         .text(function (d: any) { return d.source.name + " → Todo #" + d.target.index});
 
     node = node
+        //.selectAll("mynodes")
         .data(energy.nodes)
         .enter().append("g")
+        .attr("class","node");
 
-        .call(d3.drag()
+    //var mynode = svg.selectAll("node");
+    node.call(d3.drag()
+        //.call(d3.drag<energy.nodes, INode>()
             .subject(function(d){return d})
             .on('start', function () { this.parentNode.appendChild(this); })
-            .on('drag', dragmove));
+            .on('drag', dragmove)); 
 
+
+/*
+    var node = svg.append("g")
+        .selectAll("circle")
+        .data(graph.nodes) // Commenting this out, error goes away
+        .enter().append("circle")
+        .call(d3.drag() // Error here
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
+
+            to
+
+                                    var nodes =
+                                          svg.append("g")
+                                          .selectAll("circle")
+                                          .data(graph.nodes)
+                                          .enter().append("circle");
+
+                                    var circle = svg.selectAll("circle");
+                                    circle.call(d3.drag()
+                                          .on("start", dragstarted)
+                                          .on("drag", dragged)
+                                          .on("end", dragended));
+*/
 
     node.append("rect")
         .attr("x", function (d: any) { return d.x0; })
@@ -210,11 +240,11 @@ export class Sankey1Component implements OnInit, AfterViewInit {
     function dragmove(d) {
           var rectY = d3.select(this).select("rect").attr("y");
           d.y0 = d.y0 + d3.event.dy;
-          var yTranslate = d.y0 - rectY;
+          var yTranslate = parseInt(d.y0) - parseInt(rectY);
 
           var rectX = d3.select(this).select("rect").attr("x");
           d.x0 = d.x0 + d3.event.dx;
-          var xTranslate = d.x0 - rectX;
+          var xTranslate = parseInt(d.x0) - parseInt(rectX);
           d3.select(this).attr("transform","translate("+ [xTranslate,yTranslate] + ")"); 
           //console.log("graph=",graph); 
           sankey.update(graph);
@@ -225,6 +255,12 @@ export class Sankey1Component implements OnInit, AfterViewInit {
   }
 }
 
+/*
+interface INode {
+    id: string;
+    group: number;
+}
+*/
 
 
 interface SNodeExtra {
@@ -244,4 +280,10 @@ type SLink = d3Sankey.SankeyLink<SNodeExtra, SLinkExtra>;
 interface DAG {
     nodes: SNode[];
     links: SLink[];
+}
+
+interface INode {
+    nodeId: number,
+    name: string,
+    completed: boolean
 }

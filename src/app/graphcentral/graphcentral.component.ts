@@ -14,7 +14,7 @@ export class GraphcentralComponent implements OnInit {
 	public hoverEvent: Event;
 
 	childEventHover(event: Event) {
-	  	console.log("in graphcentral event=",event);
+	  	// console.log("in graphcentral event=",event);
 	    this.parentData = event;
 	  }
 
