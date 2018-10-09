@@ -63,6 +63,8 @@ export class Sankey1Component implements OnInit, AfterViewInit {
     //console.log("in drawchart; sankey1; width:height",this.width,":",this.height);
     //console.log("in drawchart; sankey1; this.data=",this.data);
 
+    var name=this.globals.users[0].name;
+
     let svg = d3.select(this.hostElement)
         .append('svg')
         .attr('width',"100%")
@@ -86,7 +88,7 @@ export class Sankey1Component implements OnInit, AfterViewInit {
         .attr('font-size', "2em" )
         //.style("position","absolute")
         .text(function(d){
-            return 'Single User Todos '}); 
+            return name + ' Todos '}); 
 
     // var sankey = d3.sankey()
     var sankey = d3Sankey.sankey()

@@ -26,8 +26,10 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
   @HostBinding('class') componentCssClass;
   cookieValue:string = 'UNKNOWN';
   oldTheme:string = "UNDEFINED";
+  oldRegion:string = "UNDEFINED";
   dirty:boolean=false;
   oldName:string;
+  oldEmail:string;
   //gender:any;
   //lat$:number;
   result:any;
@@ -39,6 +41,16 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
     this.expiredDate = new Date();
     this.expiredDate.setDate( this.expiredDate.getDate() + 7 );
     // console.log("in app component nginit");
+    // handle region cookies
+    const cookieExists4: boolean = this.cookieService.check('region');
+    if (cookieExists4) {
+      this.globals.region=this.cookieService.get('region');
+      this.oldRegion=this.globals.region;
+    }  else {
+      this.cookieService.set( 'region', "Not set yet" ,this.expiredDate);
+      this.oldRegion="Not set yet";
+    }
+    // handle theme cookies
     const cookieExists: boolean = this.cookieService.check('theme');
     var currTheme="dark-theme";
     if (cookieExists) {
@@ -61,6 +73,12 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
     this.globals.comments=[];
     //this.gender=[];
     this.oldTheme = this.globals.theme;
+
+    const cookieExists5: boolean = this.cookieService.check('email');
+    if (cookieExists5) {
+      this.globals.email=this.cookieService.get('email');
+    } 
+    this.oldEmail = this.globals.email;
 // check for name in cookies
     const cookieExists2: boolean = this.cookieService.check('name');
     if (cookieExists2) {
@@ -133,6 +151,15 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
          }
        }
      }
+     // console.log("in docheck; this.oldRegion:this.globals.region",this.oldRegion,":",this.globals.region)
+     if (this.oldRegion != this.globals.region) {
+       this.cookieService.set( 'region', this.globals.region ,this.expiredDate);
+     }
+
+     if (this.oldEmail != this.globals.email) {
+       this.cookieService.set( 'email', this.globals.email ,this.expiredDate);
+     }
+
      if (this.oldTheme != this.globals.theme) {
         console.log("in ngdocheck; global new theme=",this.globals.theme);
         const overlayContainerClasses = this.overlayContainer.getContainerElement().classList;

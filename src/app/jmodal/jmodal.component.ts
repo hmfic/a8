@@ -17,6 +17,7 @@ export class JmodalComponent  {
     name: string;
     modalTitle: string;
     theme: string;
+    region: string;
 
     constructor(
     	private formBuilder: FormBuilder,
@@ -38,13 +39,12 @@ export class JmodalComponent  {
       });
       
     }
-    /* submit(form) {
-      console.log("submit!=",form.value.name,":",form.value.email);
-      // this.globals.name=form.value.name;
-      this.dialogRef.close(`${form.value.name})`);
-    } */
 
     onSetTheme(theme) {
       this.globals.theme=theme;
+    }
+
+    onSetRegion(region) {
+      this.globals.region=region;
     }
 }

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { Globals } from "../globals";
+import { MatIconRegistry } from "@angular/material/icon";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: 'app-posts',
@@ -14,7 +16,19 @@ export class PostsComponent implements OnInit {
 
   constructor(
   	private data: DataService,
-  	private globals: Globals) { }
+  	private globals: Globals,
+    private matIconRegistry: MatIconRegistry,
+    private domSanitizer: DomSanitizer
+
+    ) { 
+  this.matIconRegistry.addSvgIcon(
+        'female',
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/female.svg")
+    );
+    this.matIconRegistry.addSvgIcon(
+        'male',
+        this.domSanitizer.bypassSecurityTrustResourceUrl("../assets/male.svg")
+    )}
   ngOnInit() {
   	this.data.getPosts().subscribe(data => this.posts = data);
   	this.data.getComments().subscribe(data => this.comments = data);
@@ -31,14 +45,11 @@ export class PostsComponent implements OnInit {
     console.log("Error; did not find a name; userID=",userID);
   }
 
-  /* getComments(postId) {
-  	console.log("in getcomments; postID=",[postId]);
-  	for (var i=0;i<this.globals.comments.length;i++) {
-  		if (this.globals.comments[i].postId == postId) {
-  			console.log("found getcomments match=", this.globals.users[i]);
-  			return this.globals.comments[i];
-  		}
-  	}
-  } */
+  findGender(name) {
+    name=name.split(" ")[0];
+    //console.log("in post findgender; returning name=",name);
+    //console.log("in post findgender; returning hash=",this.globals.genderhash[name])
+    return this.globals.genderhash[name];
+  }
 
 }
