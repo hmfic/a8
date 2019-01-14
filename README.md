@@ -7,6 +7,7 @@ Angular 6 (et al) installation notes
 
 ### one time stuff …
 get the extension for sublime…
+
     ```git clone --depth 1 https://github.com/Microsoft/TypeScript-Sublime-Plugin.git TypeScript```
     
 ```brew install node```
