@@ -20,7 +20,8 @@ node -v and npm -v should work
 
 ### create a new project…
 cd to your directory
-```ng new test-app (add -- routing to create a routing file)```
+
+```ng new test-app``` (add -- routing to create a routing file)
 
 ```ng serve```
 
