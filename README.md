@@ -8,22 +8,28 @@ Angular 6 (et al) installation notes
 ### one time stuff …
 get the extension for sublime…
     ```git clone --depth 1 https://github.com/Microsoft/TypeScript-Sublime-Plugin.git TypeScript```
+    
 ```brew install node```
+
 node -v and npm -v should work
 
 ```sudo npm install -g @angular/cli```
+
 ```sudo chown -R $USER:$(id -gn $USER) /Users/bubba/.config```
 
 create a new project…
 cd to your directory
 ```ng new test-app (add -- routing to create a routing file)```
+
 ```ng serve```
 
 
 create service …
 ```cd test-app/src/app```
+
 create a directory called services
 ```ng g service services/data```
+
 add ```import {DataService} from “./services/data.service’``` to app.module.ts…doesn’t do it automatically
 add DataService to provider in app.module.ts … doesn’t do it automatically
 
