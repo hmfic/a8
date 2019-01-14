@@ -8,7 +8,7 @@ Angular 6 (et al) installation notes
 ### one time stuff …
 get the extension for sublime…
 
-    ```git clone --depth 1 https://github.com/Microsoft/TypeScript-Sublime-Plugin.git TypeScript```
+```git clone --depth 1 https://github.com/Microsoft/TypeScript-Sublime-Plugin.git TypeScript```
     
 ```brew install node```
 
@@ -105,7 +105,7 @@ example:
 
 ```git commit -m “ “```
 
-```git remote add origin https://github.com/hmfic/a6.git```
+```git remote add origin https://github.com/hmfic/a8.git```
 
 ```git push -u origin master```
 
@@ -116,9 +116,9 @@ example:
 
 ```npm install typescript@'>=2.7.2 <2.10'```
 
-( Run the following command to install a compatible version of TypeScript.
+Run the following command to install a compatible version of TypeScript.
 
-```npm install typescript@'>=2.7.2 <2.10'```)
+```npm install typescript@'>=2.7.2 <2.10'```
 
 ### MATERIAL
 ```npm install --save @angular/material @angular/cdk @angular/animations```
