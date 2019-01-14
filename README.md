@@ -21,7 +21,7 @@ node -v and npm -v should work
 ### create a new project…
 cd to your directory
 
-```ng new test-app``` (add -- routing to create a routing file)
+```ng new test-app``` (add -- routing to create a routing file, add --style=scss to add scss styles)
 
 ```ng serve```
 
@@ -87,11 +87,11 @@ src/app/app.component.html - main html
 src/app/components/<component>.component.html - component html
 
 example:
-```ng new a6 --routing``` or 
+```ng new a8 --routing``` or 
 
 ```ng new a8 --style=scss --routing```
 
-```cd a6```
+```cd a8```
 
 ```ng g component users```
 
