@@ -65,7 +65,7 @@ import { map, flatMap, switchMap, mergeMap, catchError } from 'rxjs/operators';
     overlayContainerClasses.add(currTheme);
     this.componentCssClass = currTheme;
     this.globals.theme=currTheme;
-    this.globals.title="Application8";
+    this.globals.title="APPLICATION8";
     this.globals.name="Unknown";
     this.globals.users=[];
     this.globals.genderhash=[];

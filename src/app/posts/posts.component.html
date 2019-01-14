@@ -1,6 +1,34 @@
-<h1 style="display: flex;align-items: center;"><i class="material-icons blue" style="font-size: 2.5rem !important ">message</i> &nbsp;Posts</h1>
+<h2 style="display: flex;align-items: center;"><i class="material-icons blue" style="font-size: 2.5rem !important ">message</i> &nbsp;Posts</h2>
 
-<div>
+
+<mat-accordion>
+
+  <mat-expansion-panel *ngFor="let post of posts">
+    <mat-expansion-panel-header collapsedHeight="50px" expandedHeight="50px">
+      <mat-panel-title>
+      	<mat-icon class="blue" svgIcon="{{findGender(getUser(post.userId).name)}}">
+		</mat-icon>
+			&nbsp;<b>{{getUser(post.userId).name}}</b>
+		</mat-panel-title>
+		<mat-panel-description>{{post.title}}</mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <span *ngFor="let comment of comments">
+		<mat-card *ngIf="comment.postId == post.id" style="margin-bottom: 5px;"> 
+			<mat-card-title><i class="material-icons blue">reply</i> {{comment.name}}</mat-card-title>
+			<mat-card-content>
+				<div class="row"><b>{{comment.email}}</b></div>
+				<div class="row">{{comment.body}}</div>
+			</mat-card-content>
+		</mat-card>
+	</span>
+
+  </mat-expansion-panel>
+
+</mat-accordion>
+
+
+<!-- <div>
 	<div *ngFor="let post of posts">
 		<mat-card >
 			<mat-card-title style="display: flex;align-items: center;"><i class="material-icons blue" style="font-size: 2.5rem !important">message</i> &nbsp; {{post.title}}</mat-card-title>
@@ -27,4 +55,4 @@
 		</mat-card>
 		<p>
 	</div>
-</div>
+</div> -->

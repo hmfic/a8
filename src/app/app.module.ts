@@ -14,7 +14,7 @@ import { UsersComponent } from './users/users.component';
 import { HttpClientModule} from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCardModule, MatSidenavModule, MatGridListModule, MatCheckboxModule, 
-         MatToolbarModule, MatListModule, MatMenuModule, MatDialogModule, MatFormFieldModule, 
+         MatToolbarModule, MatListModule, MatMenuModule, MatDialogModule, MatFormFieldModule, MatExpansionModule,
          MatSelectModule, MatInputModule } from '@angular/material';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRadioModule } from '@angular/material/radio';
@@ -57,6 +57,7 @@ import { GraphcentralComponent } from './graphcentral/graphcentral.component';
     MatButtonModule, 
     MatCheckboxModule,
     MatCardModule,
+    MatExpansionModule,
     MatGridListModule,
     MatIconModule,
     MatSidenavModule,
