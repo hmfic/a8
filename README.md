@@ -116,8 +116,9 @@ example:
 
 ```npm install typescript@'>=2.7.2 <2.10'```
 
-( Please run the following command to install a compatible version of TypeScript.
-    npm install typescript@'>=2.7.2 <2.10' )
+( Run the following command to install a compatible version of TypeScript.
+
+    ```npm install typescript@'>=2.7.2 <2.10' ```)
 
 ### MATERIAL
 ```npm install --save @angular/material @angular/cdk @angular/animations```
