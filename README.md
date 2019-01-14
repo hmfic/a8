@@ -18,7 +18,7 @@ node -v and npm -v should work
 
 ```sudo chown -R $USER:$(id -gn $USER) /Users/bubba/.config```
 
-create a new project…
+### create a new project…
 cd to your directory
 ```ng new test-app (add -- routing to create a routing file)```
 
