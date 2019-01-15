@@ -19,9 +19,15 @@ node -v and npm -v should work
 ```sudo chown -R $USER:$(id -gn $USER) /Users/bubba/.config```
 
 ### create a new project…
-cd to your directory
+cd to your directory (the one above the place where you want it ; i.e. Desktop)
 
 ```ng new test-app``` (add -- routing to create a routing file, add --style=scss to add scss styles)
+
+```cd test-app```
+
+create all you git init here
+
+do all your ng updates here
 
 ```ng serve```
 
